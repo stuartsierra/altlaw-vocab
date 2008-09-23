@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF 
+    xmlns:alt="http://id.altlaw.org/terms/"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+
+  <owl:Ontology rdf:about="">
+    <dcterms:title>AltLaw.org Vocabulary</dcterms:title>
+    <dcterms:description>
+      An RDF vocabulary for Semantic Web applications using data
+      provided by AltLaw.org.  The classes and properties defined here
+      are intended to supplement metadata vocabularies such as Dublin
+      Core.
+    </dcterms:description>
+  </owl:Ontology>
+
+  <rdfs:Class rdf:about="http://id.altlaw.org/terms/Decision">
+    <rdfs:label>Decision</rdfs:label>
+    <rdfs:comment>
+      A single decision released by a court, which may resolve
+      multiple cases and contain multiple writings.
+    </rdfs:comment>
+  </rdfs:Class>
+
+  <rdfs:Class rdf:about="http://id.altlaw.org/terms/Writing">
+    <rdfs:label>Writing</rdfs:label>
+    <rdfs:comment>
+      A single writing within a decision, such as a majority decision,
+      concurrence, or dissent.  Not currently used by AltLaw, but
+      defined in other vocabularies such as OAI4Courts.
+    </rdfs:comment>
+  </rdfs:Class>
+
+  <rdfs:Class rdf:about="http://id.altlaw.org/terms/Court">
+    <rdfs:label>Court</rdfs:label>
+    <rdfs:comment>
+      Any court.  Refines "foaf:Organization".
+    </rdfs:comment>
+    <rdfs:subPropertyOf rdf:resource="http://xmlns.com/foaf/0.1/Organization"/>
+  </rdfs:Class>
+
+  <rdf:Property rdf:about="http://id.altlaw.org/terms/court">
+    <rdfs:label>court</rdfs:label>
+    <rdfs:comment>
+      The court which originated a decision.  Refines
+      "dcterms:coverage".
+    </rdfs:comment>
+    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Decision"/>
+    <rdfs:range rdf:resource="http://id.altlaw.org/terms/Court"/>
+    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/coverage">
+  </rdf:Property>
+  
+  <rdf:Property rdf:about="http://id.altlaw.org/terms/docket">
+    <rdfs:label>docket</rdfs:label>
+    <rdfs:comment>
+      The docket number associated with a case or decision.  A single
+      case or decision may have multiple docket numbers attached to
+      it.  The range of this property is any string, which may include
+      punctuation such as hyphens, but it should be a single docket
+      number rather than a series such as "10-102; 10-103".  The
+      string also should not contain abbreviations for "Number" such
+      as "No." or "Nos.".  Refines "dcterms:identifier".
+    </rdfs:comment>
+    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/identifier"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+  </rdf:Property>
+
+  <rdf:Property rdf:about="http://id.altlaw.org/terms/bluebookIdentifier">
+    <rdfs:label>Bluebook identifier</rdfs:label>
+    <rdfs:comment>
+      A citation to a decision in the form described by "A Uniform
+      System of Citation", a.k.a. the Bluebook, available at
+      http://www.legalbluebook.com/.  Values of this property should
+      contain only the minimal information needed to identify the
+      decision within a single publication, e.g. "123 F.3d 456".  They
+      are not, therefore, complete citations as described by the
+      Bluebook.  A single value of this property must not include
+      parallel citations, but a single decision may have multiple
+      bluebookIdentifiers, one for each parallel citation.  Refines
+      "dcterms:identifier".
+    </rdfs:comment>
+    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/identifier"/>
+    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Decision"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+  </rdf:Property>
+
+  <rdf:Property rdf:about="http://id.altlaw.org/terms/precedential">
+    <rdfs:label>precedential</rdfs:label>
+    <rdfs:comment>
+      Boolean indicating whether or not a decision is considered
+      "precedential" (or, equivalently, "published") by the court
+      that issued it.
+    </rdfs:comment>
+    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Decision"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+  </rdf:Property>
+</rdf:RDF>
