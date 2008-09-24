@@ -40,7 +40,7 @@
     <rdfs:comment>
       Any court.  Refines "foaf:Organization".
     </rdfs:comment>
-    <rdfs:subPropertyOf rdf:resource="http://xmlns.com/foaf/0.1/Organization"/>
+    <rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Organization"/>
   </rdfs:Class>
 
   <rdf:Property rdf:about="http://id.altlaw.org/terms/court">
