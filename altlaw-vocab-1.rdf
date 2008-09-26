@@ -139,7 +139,6 @@
       bluebookIdentifiers, one for each parallel citation.
     </rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/identifier"/>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Decision"/>
     <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdf:Property>
@@ -175,7 +174,6 @@
       Date that a case was argued before a court.  Datatype should be
       "xsd:date".
     </rdfs:comment>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Decision"/>
     <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
     <owl:sameAs rdf:resource="http://purl.org/ontology/bibo/argued"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
@@ -190,6 +188,7 @@
       a non-literal range.
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="http://www.iana.org/assignments/media-types/"/>
+    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/File"/>
     <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
     <owl:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/format"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
@@ -208,11 +207,11 @@
       "windows-1252", and "UTF-8".
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="http://www.iana.org/assignments/character-sets"/>
+    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/File"/>
     <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
     <owl:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/format"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdf:Property>
-
 
 
   <!-- PROPERTIES DEFINED IN OTHER ONTOLOGIES -->
