@@ -122,7 +122,6 @@
         </xsl:attribute>
         <xsl:value-of select="@rdf:resource"/>
       </a>
-
     </p>
   </xsl:template>
 
@@ -135,7 +134,6 @@
         </xsl:attribute>
         <xsl:value-of select="@rdf:resource"/>
       </a>
-
     </p>
   </xsl:template>
   
@@ -148,7 +146,6 @@
         </xsl:attribute>
         <xsl:value-of select="@rdf:resource"/>
       </a>
-
     </p>
   </xsl:template>
   
@@ -161,7 +158,6 @@
         </xsl:attribute>
         <xsl:value-of select="@rdf:resource"/>
       </a>
-
     </p>
   </xsl:template>
   
