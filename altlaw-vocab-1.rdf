@@ -82,8 +82,8 @@
   <rdfs:Class rdf:about="http://id.altlaw.org/terms/Crawl">
     <rdfs:label>Crawl</rdfs:label>
     <rdfs:comment>
-      A Crawl is an automated retrieval and processing of Internet
-      resources.
+      A Crawl is a single run of an automated process that retrieves
+      and processes Internet resources.
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Class>
@@ -93,8 +93,8 @@
     <rdfs:comment>
       A concrete digital representation of a document.  As opposed to
       the abstract concept of a document and the facts it embodies, a
-      File is a sequence of bytes in a particular format and/or
-      encoding.  
+      File is a finite sequence of bytes in a particular format and/or
+      encoding.  OAI4Courts calls this a "writing".
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Class>
@@ -108,7 +108,6 @@
       The court which originated a decision.
     </rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/coverage"/>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Decision"/>
     <rdfs:range rdf:resource="http://id.altlaw.org/terms/Court"/>
     <owl:sameAs rdf:resource="http://purl.org/ontology/bibo/court"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
