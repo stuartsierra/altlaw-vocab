@@ -29,17 +29,62 @@
           <xsl:text>This HTML documentation was generated from the original RDF/XML sources on </xsl:text>
           <xsl:value-of select="fn:current-dateTime()"/>
         </p>
-        <hr/>
+        <div class="quicklinks">
+          <h2>Index of Terms</h2>
+          <p>
+            <xsl:text>Classes: </xsl:text>
+            <xsl:for-each select="//rdfs:Class">
+              <span>
+                <a>
+                  <xsl:attribute name="href">
+                    <xsl:text>#term_</xsl:text>
+                    <xsl:value-of select="fn:replace(rdfs:label,':','_')"/>
+                  </xsl:attribute>
+                  <xsl:value-of select="rdfs:label"/>
+                </a>
+              </span>
+              <xsl:text> </xsl:text>
+            </xsl:for-each>
+          </p>
+          <p>
+            <xsl:text>Properties: </xsl:text>
+            <xsl:for-each select="//rdfs:Property[rdfs:isDefinedBy/@rdf:resource = 'http://id.altlaw.org/terms/']">
+              <span>
+                <a>
+                  <xsl:attribute name="href">
+                    <xsl:text>#term_</xsl:text>
+                    <xsl:value-of select="fn:replace(rdfs:label,':','_')"/>
+                  </xsl:attribute>
+                  <xsl:value-of select="rdfs:label"/>
+                </a>
+              </span>
+              <xsl:text> </xsl:text>
+            </xsl:for-each>
+          </p>
+          <p>
+            <xsl:text>Terms from other vocabularies: </xsl:text>
+            <xsl:for-each select="//(rdfs:Property | rdfs:Class)[rdfs:isDefinedBy/@rdf:resource != 'http://id.altlaw.org/terms/']">
+              <span>
+                <a>
+                  <xsl:attribute name="href">
+                    <xsl:text>#term_</xsl:text>
+                    <xsl:value-of select="fn:replace(rdfs:label,':','_')"/>
+                  </xsl:attribute>
+                  <xsl:value-of select="rdfs:label"/>
+                </a>
+              </span>
+              <xsl:text> </xsl:text>
+            </xsl:for-each>
+          </p>
+        </div>
         <div class="rdfclasses">
           <h2>Classes defined in this vocabulary</h2>
           <xsl:apply-templates select="//rdfs:Class"/>
         </div>
-        <hr/>
         <div class="rdfproperties">
           <h2>Properties defined in this vocabulary</h2>
           <xsl:apply-templates select="//rdfs:Property[rdfs:isDefinedBy/@rdf:resource = 'http://id.altlaw.org/terms/']"/>
         </div>
-        <hr/>
         <div class="rdfborrowed">
           <h2>Terms borrowed from other vocabularies</h2>
           <xsl:apply-templates select="//(rdfs:Property | rdfs:Class)[rdfs:isDefinedBy/@rdf:resource != 'http://id.altlaw.org/terms/']"/>
@@ -58,7 +103,7 @@
     </h1>
   </xsl:template>
 
-  <xsl:template match="dcterms:description|rdfs:comment">
+  <xsl:template match="dcterms:description">
     <xsl:for-each select="fn:tokenize(text(), '\n\n')">
       <p>
         <xsl:value-of select="."/>
@@ -66,87 +111,123 @@
     </xsl:for-each>
   </xsl:template>
 
+  <xsl:template match="rdfs:comment">
+    <dt>Definition: </dt>
+    <dd>
+      <xsl:for-each select="fn:tokenize(text(), '\n\n')">
+        <p>
+          <xsl:value-of select="."/>
+        </p>
+      </xsl:for-each>
+    </dd>
+  </xsl:template>
+
   <xsl:template match="rdfs:Class">
     <div class="rdfclass">
+      <xsl:attribute name="id">
+        <xsl:text>term_</xsl:text>
+        <xsl:value-of select="fn:replace(rdfs:label,':','_')"/>
+      </xsl:attribute>
       <h3>
         <xsl:text>Class: </xsl:text>
         <xsl:apply-templates select="rdfs:label"/>
       </h3>
-      <xsl:apply-templates select="rdfs:comment|rdfs:isDefinedBy|rdfs:subClassOf|rdfs:subClassOf|rdfs:domain|rdfs:range|owl:sameAs"/>
+      <dl>
+        <xsl:apply-templates select="@rdf:about"/>
+        <xsl:apply-templates select="rdfs:comment|rdfs:isDefinedBy|rdfs:subClassOf|rdfs:subClassOf|rdfs:domain|rdfs:range|owl:sameAs"/>
+      </dl>
     </div>
   </xsl:template>
   
   <xsl:template match="rdfs:Property">
     <div class="rdfproperty">
+      <xsl:attribute name="id">
+        <xsl:text>term_</xsl:text>
+        <xsl:value-of select="fn:replace(rdfs:label,':','_')"/>
+      </xsl:attribute>
       <h3>
         <xsl:text>Property: </xsl:text>
         <xsl:apply-templates select="rdfs:label"/>
       </h3>
-      <xsl:apply-templates select="rdfs:comment|rdfs:isDefinedBy|rdfs:subClassOf|rdfs:subClassOf|rdfs:domain|rdfs:range|owl:sameAs"/>
+      <dl>
+        <xsl:apply-templates select="@rdf:about"/>
+        <xsl:apply-templates select="rdfs:comment|rdfs:isDefinedBy|rdfs:subClassOf|rdfs:subClassOf|rdfs:domain|rdfs:range|owl:sameAs"/>
+      </dl>
     </div>
+  </xsl:template>
+
+  <xsl:template match="@rdf:about">
+    <dt>URI: </dt>
+    <dd>
+      <a>
+        <xsl:attribute name="href">
+          <xsl:value-of select="."/>
+        </xsl:attribute>
+        <xsl:value-of select="."/>
+      </a>
+    </dd>
   </xsl:template>
 
   <xsl:template match="rdfs:isDefinedBy">
     <xsl:if test="@rdf:resource != 'http://id.altlaw.org/terms/'">
-      <p>
-        <xsl:text>Defined by: </xsl:text>
+      <dt>Defined by: </dt>
+      <dd>
         <a>
           <xsl:attribute name="href">
             <xsl:value-of select="@rdf:resource"/>
           </xsl:attribute>
           <xsl:value-of select="@rdf:resource"/>
         </a>
-      </p>
+      </dd>
     </xsl:if>
   </xsl:template>
   
   <xsl:template match="rdfs:domain">
-    <p>
-      <xsl:text>Domain: </xsl:text>
+    <dt>Domain: </dt>
+    <dd>
       <a>
         <xsl:attribute name="href">
           <xsl:value-of select="@rdf:resource"/>
         </xsl:attribute>
         <xsl:value-of select="@rdf:resource"/>
       </a>
-
-    </p>
+    </dd>
   </xsl:template>
   
   <xsl:template match="rdfs:range">
-    <p>
-      <xsl:text>Range: </xsl:text>
+    <dt>Range: </dt>
+    <dd>
       <a>
         <xsl:attribute name="href">
           <xsl:value-of select="@rdf:resource"/>
         </xsl:attribute>
         <xsl:value-of select="@rdf:resource"/>
       </a>
-    </p>
+    </dd>
   </xsl:template>
 
   <xsl:template match="rdfs:subClassOf|rdfs:subPropertyOf">
-    <p>
-      <xsl:text>Refines: </xsl:text>
+    <dt>Refines: </dt>
+    <dd>
       <a>
         <xsl:attribute name="href">
           <xsl:value-of select="@rdf:resource"/>
         </xsl:attribute>
         <xsl:value-of select="@rdf:resource"/>
       </a>
-    </p>
+    </dd>
   </xsl:template>
   
   <xsl:template match="owl:sameAs">
-    <p>
-      <xsl:text>Same as: </xsl:text>
+    <dt>Same as: </dt>
+    <dd>
       <a>
         <xsl:attribute name="href">
           <xsl:value-of select="@rdf:resource"/>
         </xsl:attribute>
         <xsl:value-of select="@rdf:resource"/>
       </a>
-    </p>
+    </dd>
   </xsl:template>
   
 </xsl:stylesheet>
