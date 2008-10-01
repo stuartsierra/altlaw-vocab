@@ -337,7 +337,17 @@
       have a "mimeType" property giving its MIME type.
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
-    <rdfs:subClassOf rdf:resource="http://purl.org/dc/elements/1.1/relation"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/dc/terms/relation"/>
+  </rdfs:Property>
+
+  <rdfs:Property rdf:about="http://purl.org/dc/terms/issued">
+    <rdfs:label>dcterms:abstract</rdfs:label>
+    <rdfs:comment>
+      An abstract or summary of a decision.  Provided by some court
+      web sites, but not considered part of the official decision.
+    </rdfs:comment>
+    <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    <rdfs:subClassOf rdf:resource="http://purl.org/dc/terms/description"/>
   </rdfs:Property>
 
 </rdf:RDF>
