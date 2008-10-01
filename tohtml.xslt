@@ -25,6 +25,10 @@
       </head>
       <body>
         <xsl:apply-templates select="//owl:Ontology"/>
+        <p>
+          <xsl:text>This HTML documentation was generated from the original RDF/XML sources on </xsl:text>
+          <xsl:value-of select="fn:current-dateTime()"/>
+        </p>
         <hr/>
         <div class="rdfclasses">
           <h2>Classes defined in this vocabulary</h2>
@@ -68,7 +72,7 @@
         <xsl:text>Class: </xsl:text>
         <xsl:apply-templates select="rdfs:label"/>
       </h3>
-      <xsl:apply-templates select="rdfs:comment|rdfs:isDefinedBy|owl:subPropertyOf|owl:subClassOf|rdfs:domain|rdfs:range|owl:sameAs"/>
+      <xsl:apply-templates select="rdfs:comment|rdfs:isDefinedBy|rdfs:subClassOf|rdfs:subClassOf|rdfs:domain|rdfs:range|owl:sameAs"/>
     </div>
   </xsl:template>
   
@@ -78,7 +82,7 @@
         <xsl:text>Property: </xsl:text>
         <xsl:apply-templates select="rdfs:label"/>
       </h3>
-      <xsl:apply-templates select="rdfs:comment|rdfs:isDefinedBy|owl:subPropertyOf|owl:subClassOf|rdfs:domain|rdfs:range|owl:sameAs"/>
+      <xsl:apply-templates select="rdfs:comment|rdfs:isDefinedBy|rdfs:subClassOf|rdfs:subClassOf|rdfs:domain|rdfs:range|owl:sameAs"/>
     </div>
   </xsl:template>
 
@@ -122,7 +126,7 @@
     </p>
   </xsl:template>
 
-  <xsl:template match="owl:subClassOf">
+  <xsl:template match="rdfs:subClassOf">
     <p>
       <xsl:text>Sub-Class of: </xsl:text>
       <a>
@@ -135,7 +139,7 @@
     </p>
   </xsl:template>
   
-  <xsl:template match="owl:subPropertyOf">
+  <xsl:template match="rdfs:subPropertyOf">
     <p>
       <xsl:text>Sub-Property of: </xsl:text>
       <a>
