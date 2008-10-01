@@ -368,6 +368,10 @@
       Free-text field to store any additional metadata about a case.
       This is where metadata scrapers put any information that they do
       not know how to parse.
+
+      If a scraper knows something about the kind of data the field
+      contains, it may prefix the contents with an identifier in ALL
+      CAPS, such as "APPEAL FROM" or "HEARD BY".
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/description"/>
