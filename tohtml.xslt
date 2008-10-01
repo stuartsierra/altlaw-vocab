@@ -125,21 +125,9 @@
     </p>
   </xsl:template>
 
-  <xsl:template match="rdfs:subClassOf">
+  <xsl:template match="rdfs:subClassOf|rdfs:subPropertyOf">
     <p>
-      <xsl:text>Sub-Class of: </xsl:text>
-      <a>
-        <xsl:attribute name="href">
-          <xsl:value-of select="@rdf:resource"/>
-        </xsl:attribute>
-        <xsl:value-of select="@rdf:resource"/>
-      </a>
-    </p>
-  </xsl:template>
-  
-  <xsl:template match="rdfs:subPropertyOf">
-    <p>
-      <xsl:text>Sub-Property of: </xsl:text>
+      <xsl:text>Refines: </xsl:text>
       <a>
         <xsl:attribute name="href">
           <xsl:value-of select="@rdf:resource"/>
