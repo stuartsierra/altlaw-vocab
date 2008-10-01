@@ -37,8 +37,8 @@
               <span>
                 <a>
                   <xsl:attribute name="href">
-                    <xsl:text>#term_</xsl:text>
-                    <xsl:value-of select="fn:replace(rdfs:label,':','_')"/>
+                    <xsl:text>#term-</xsl:text>
+                    <xsl:value-of select="fn:replace(rdfs:label,':','-')"/>
                   </xsl:attribute>
                   <xsl:value-of select="rdfs:label"/>
                 </a>
@@ -52,8 +52,8 @@
               <span>
                 <a>
                   <xsl:attribute name="href">
-                    <xsl:text>#term_</xsl:text>
-                    <xsl:value-of select="fn:replace(rdfs:label,':','_')"/>
+                    <xsl:text>#term-</xsl:text>
+                    <xsl:value-of select="fn:replace(rdfs:label,':','-')"/>
                   </xsl:attribute>
                   <xsl:value-of select="rdfs:label"/>
                 </a>
@@ -67,8 +67,8 @@
               <span>
                 <a>
                   <xsl:attribute name="href">
-                    <xsl:text>#term_</xsl:text>
-                    <xsl:value-of select="fn:replace(rdfs:label,':','_')"/>
+                    <xsl:text>#term-</xsl:text>
+                    <xsl:value-of select="fn:replace(rdfs:label,':','-')"/>
                   </xsl:attribute>
                   <xsl:value-of select="rdfs:label"/>
                 </a>
@@ -125,8 +125,8 @@
   <xsl:template match="rdfs:Class">
     <div class="rdfclass">
       <xsl:attribute name="id">
-        <xsl:text>term_</xsl:text>
-        <xsl:value-of select="fn:replace(rdfs:label,':','_')"/>
+        <xsl:text>term-</xsl:text>
+        <xsl:value-of select="fn:replace(rdfs:label,':','-')"/>
       </xsl:attribute>
       <h3>
         <xsl:text>Class: </xsl:text>
@@ -134,7 +134,7 @@
       </h3>
       <dl>
         <xsl:apply-templates select="@rdf:about"/>
-        <xsl:apply-templates select="rdfs:comment|rdfs:isDefinedBy|rdfs:subClassOf|rdfs:subClassOf|rdfs:domain|rdfs:range|owl:sameAs"/>
+        <xsl:apply-templates select="rdfs:comment|rdfs:isDefinedBy|rdfs:subClassOf|rdfs:subClassOf|rdfs:domain|rdfs:range|rdfs:seeAlso|owl:sameAs"/>
       </dl>
     </div>
   </xsl:template>
@@ -142,8 +142,8 @@
   <xsl:template match="rdfs:Property">
     <div class="rdfproperty">
       <xsl:attribute name="id">
-        <xsl:text>term_</xsl:text>
-        <xsl:value-of select="fn:replace(rdfs:label,':','_')"/>
+        <xsl:text>term-</xsl:text>
+        <xsl:value-of select="fn:replace(rdfs:label,':','-')"/>
       </xsl:attribute>
       <h3>
         <xsl:text>Property: </xsl:text>
@@ -151,7 +151,7 @@
       </h3>
       <dl>
         <xsl:apply-templates select="@rdf:about"/>
-        <xsl:apply-templates select="rdfs:comment|rdfs:isDefinedBy|rdfs:subClassOf|rdfs:subClassOf|rdfs:domain|rdfs:range|owl:sameAs"/>
+        <xsl:apply-templates select="rdfs:comment|rdfs:isDefinedBy|rdfs:subClassOf|rdfs:subClassOf|rdfs:domain|rdfs:range|rdfs:seeAlso|owl:sameAs"/>
       </dl>
     </div>
   </xsl:template>
@@ -208,6 +208,18 @@
 
   <xsl:template match="rdfs:subClassOf|rdfs:subPropertyOf">
     <dt>Refines: </dt>
+    <dd>
+      <a>
+        <xsl:attribute name="href">
+          <xsl:value-of select="@rdf:resource"/>
+        </xsl:attribute>
+        <xsl:value-of select="@rdf:resource"/>
+      </a>
+    </dd>
+  </xsl:template>
+  
+  <xsl:template match="rdfs:seeAlso">
+    <dt>See also: </dt>
     <dd>
       <a>
         <xsl:attribute name="href">
