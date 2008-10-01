@@ -351,6 +351,17 @@
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/description"/>
   </rdfs:Property>
 
+  <rdfs:Property rdf:about="http://purl.org/dc/terms/subject">
+    <rdfs:label>dcterms:subject</rdfs:label>
+    <rdfs:comment>
+      A keyword or broad topic heading for the case, such as
+      "criminal" or "immigration".  Provided by some court web sites,
+      but not considered part of the official decision.
+    </rdfs:comment>
+    <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/subject"/>
+  </rdfs:Property>
+
   <rdfs:Property rdf:about="http://purl.org/dc/terms/issued">
     <rdfs:label>dcterms:description</rdfs:label>
     <rdfs:comment>
