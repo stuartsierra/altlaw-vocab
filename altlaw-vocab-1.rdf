@@ -231,7 +231,7 @@
     <rdfs:seeAlso rdf:resource="http://www.iana.org/assignments/media-types/"/>
     <rdfs:domain rdf:resource="http://id.altlaw.org/terms/File"/>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:subClassOf rdf:resource="http://purl.org/dc/elements/1.1/format"/>
+    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/format"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
 
@@ -250,7 +250,7 @@
     <rdfs:seeAlso rdf:resource="http://www.iana.org/assignments/character-sets"/>
     <rdfs:domain rdf:resource="http://id.altlaw.org/terms/File"/>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:subClassOf rdf:resource="http://purl.org/dc/elements/1.1/format"/>
+    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/format"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
 
@@ -293,7 +293,7 @@
       Datatype should be "xsd:date".
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
-    <rdfs:subClassOf rdf:resource="http://purl.org/dc/elements/1.1/date"/>
+    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/date"/>
   </rdfs:Property>
 
   <rdfs:Property rdf:about="http://purl.org/dc/terms/issued">
@@ -303,7 +303,7 @@
       the date of publication is different from the date "decided".
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
-    <rdfs:subClassOf rdf:resource="http://purl.org/dc/terms/date"/>
+    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/date"/>
   </rdfs:Property>
 
   <rdfs:Property rdf:about="http://purl.org/dc/terms/issued">
@@ -315,7 +315,7 @@
       only one full title.
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
-    <rdfs:subClassOf rdf:resource="http://purl.org/dc/elements/1.1/title"/>
+    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/title"/>
   </rdfs:Property>
 
   <rdfs:Property rdf:about="http://purl.org/ontology/bibo/shortTitle">
@@ -326,7 +326,7 @@
       "Brown".  A case may have multiple short titles.
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/ontology/bibo/"/>
-    <rdfs:subClassOf rdf:resource="http://purl.org/dc/terms/alternative"/>
+    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/alternative"/>
   </rdfs:Property>
 
   <rdfs:Property rdf:about="http://purl.org/dc/terms/hasFormat">
@@ -337,7 +337,7 @@
       have a "mimeType" property giving its MIME type.
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
-    <rdfs:subClassOf rdf:resource="http://purl.org/dc/terms/relation"/>
+    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/relation"/>
   </rdfs:Property>
 
   <rdfs:Property rdf:about="http://purl.org/dc/terms/issued">
@@ -347,7 +347,18 @@
       web sites, but not considered part of the official decision.
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
-    <rdfs:subClassOf rdf:resource="http://purl.org/dc/terms/description"/>
+    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/description"/>
+  </rdfs:Property>
+
+  <rdfs:Property rdf:about="http://purl.org/dc/terms/issued">
+    <rdfs:label>dcterms:description</rdfs:label>
+    <rdfs:comment>
+      Free-text field to store any additional metadata about a case.
+      This is where metadata scrapers put any information that they do
+      not know how to parse.
+    </rdfs:comment>
+    <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/description"/>
   </rdfs:Property>
 
 </rdf:RDF>
