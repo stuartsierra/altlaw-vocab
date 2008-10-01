@@ -138,7 +138,7 @@
       as "No." or "Nos.".
     </rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/identifier"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
 
@@ -160,7 +160,7 @@
       bluebookIdentifiers, one for each parallel citation.
     </rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/identifier"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
 
@@ -169,10 +169,10 @@
     <rdfs:comment>
       Boolean indicating whether or not a decision is considered
       "precedential" (or, equivalently, "published") by the court
-      that issued it.  Datatype should be "xsd:boolean".
+      that issued it.
     </rdfs:comment>
     <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Decision"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
 
@@ -182,20 +182,18 @@
       Date that a court decision/ruling/order was decided.  May or may
       not be the same as date of publication ("dcterms:issued").  This
       is the preferred date to use when describing a court decision.
-      Datatype should be "xsd:date".
     </rdfs:comment>
     <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Decision"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
 
   <rdfs:Property rdf:about="http://id.altlaw.org/terms/argued">
     <rdfs:label>argued</rdfs:label>
     <rdfs:comment>
-      Date that a case was argued before a court.  Datatype should be
-      "xsd:date".
+      Date that a case was argued before a court.
     </rdfs:comment>
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
     <owl:sameAs rdf:resource="http://purl.org/ontology/bibo/argued"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
@@ -206,7 +204,6 @@
       The name of the primary author (usually a judge) of a decision
       or opinion.
     </rdfs:comment>
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
 
@@ -230,7 +227,7 @@
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="http://www.iana.org/assignments/media-types/"/>
     <rdfs:domain rdf:resource="http://id.altlaw.org/terms/File"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     <rdfs:subClassOf rdf:resource="http://purl.org/dc/elements/1.1/format"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
@@ -249,7 +246,7 @@
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="http://www.iana.org/assignments/character-sets"/>
     <rdfs:domain rdf:resource="http://id.altlaw.org/terms/File"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     <rdfs:subClassOf rdf:resource="http://purl.org/dc/elements/1.1/format"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
@@ -259,7 +256,7 @@
     <rdfs:comment>
       Timestamp when a Crawl or other process began.
     </rdfs:comment>
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
 
@@ -268,7 +265,7 @@
     <rdfs:comment>
       Timestamp when a Crawl or other process was completed.
     </rdfs:comment>
-    <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
 
