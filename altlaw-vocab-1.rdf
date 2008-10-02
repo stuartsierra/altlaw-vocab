@@ -211,15 +211,6 @@
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/author">
-    <rdfs:label>author</rdfs:label>
-    <rdfs:comment>
-      The name of the primary author (usually a judge) of a decision
-      or opinion.
-    </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Property>
-
   <rdfs:Property rdf:about="http://id.altlaw.org/terms/amends">
     <rdfs:label>amends</rdfs:label>
     <rdfs:comment>
