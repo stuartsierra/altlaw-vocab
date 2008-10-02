@@ -61,6 +61,7 @@
     </rdfs:comment>
     <owl:sameAs rdf:resource="http://purl.org/ontology/bibo/LegalDecision"/>
     <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/LegalCaseDocument"/>
+    <rdfs:seeAlso rdf:resource="http://bibliontology.com/"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Class>
 
@@ -354,6 +355,7 @@
       specific dates, such as "decided" or "issued", are unknown.
       Datatype should be "xsd:date".
     </rdfs:comment>
+    <rdfs:seeAlso rdf:resource="http://dublincore.org/documents/dcmi-terms/"/>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/date"/>
   </rdfs:Property>
@@ -364,6 +366,7 @@
       The date a decision was published.  Use this property only when
       the date of publication is different from the date "decided".
     </rdfs:comment>
+    <rdfs:seeAlso rdf:resource="http://dublincore.org/documents/dcmi-terms/"/>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/date"/>
   </rdfs:Property>
@@ -376,6 +379,7 @@
       al. v. Board of Education of Topeka et al."  A case should have
       only one full title.
     </rdfs:comment>
+    <rdfs:seeAlso rdf:resource="http://dublincore.org/documents/dcmi-terms/"/>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/title"/>
   </rdfs:Property>
@@ -388,26 +392,28 @@
       "Brown".  A case may have multiple short titles.
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/ontology/bibo/"/>
+    <rdfs:seeAlso rdf:resource="http://bibliontology.com/"/>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/alternative"/>
   </rdfs:Property>
 
   <rdfs:Property rdf:about="http://purl.org/dc/terms/hasFormat">
     <rdfs:label>dcterms:hasFormat</rdfs:label>
     <rdfs:comment>
-      Pointer to a resource containing the content of a decision in
-      another format, such as PDF or HTML.  The target resource should
-      have a "mimeType" property giving its MIME type.
+      Link from an abstract entity, such as a Decision, to its
+      concrete representation, such as a File.
     </rdfs:comment>
+    <rdfs:seeAlso rdf:resource="http://dublincore.org/documents/dcmi-terms/"/>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/relation"/>
   </rdfs:Property>
 
-  <rdfs:Property rdf:about="http://purl.org/dc/terms/issued">
+  <rdfs:Property rdf:about="http://purl.org/dc/terms/abstract">
     <rdfs:label>dcterms:abstract</rdfs:label>
     <rdfs:comment>
       An abstract or summary of a decision.  Provided by some court
       web sites, but not considered part of the official decision.
     </rdfs:comment>
+    <rdfs:seeAlso rdf:resource="http://dublincore.org/documents/dcmi-terms/"/>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/description"/>
   </rdfs:Property>
@@ -419,6 +425,7 @@
       "criminal" or "immigration".  Provided by some court web sites,
       but not considered part of the official decision.
     </rdfs:comment>
+    <rdfs:seeAlso rdf:resource="http://dublincore.org/documents/dcmi-terms/"/>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/subject"/>
   </rdfs:Property>
@@ -434,6 +441,7 @@
       contains, it may prefix the contents with an identifier in ALL
       CAPS, such as "APPEAL FROM" or "HEARD BY".
     </rdfs:comment>
+    <rdfs:seeAlso rdf:resource="http://dublincore.org/documents/dcmi-terms/"/>
     <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/description"/>
   </rdfs:Property>
