@@ -84,8 +84,8 @@
           <xsl:text>This HTML documentation was generated from the original RDF/XML sources on </xsl:text>
           <xsl:value-of select="fn:current-dateTime()"/>
         </p>
-        <div class="quicklinks">
-          <h2>Index of Terms</h2>
+        <div class="quicklinks" id="glance">
+          <h2>Terms at a Glance</h2>
           <p>
             <xsl:text>Classes: </xsl:text>
             <xsl:for-each select="//rdfs:Class[rdfs:isDefinedBy/@rdf:resource = $thisOntology]">
@@ -154,7 +154,9 @@
       </h3>
       <dl>
         <xsl:apply-templates select="@rdf:about"/>
-        <xsl:apply-templates select="rdfs:comment|rdfs:isDefinedBy|rdfs:subClassOf|rdfs:subClassOf|rdfs:domain|rdfs:range|rdfs:seeAlso|owl:sameAs"/>
+        <xsl:apply-templates select="rdfs:comment"/>
+        <xsl:apply-templates select="rdfs:seeAlso"/>
+        <xsl:apply-templates select="rdfs:subClassOf"/>
         <xsl:variable name="myurl">
           <xsl:value-of select="@rdf:about"/>
         </xsl:variable>
@@ -175,6 +177,7 @@
           </dd>
         </xsl:if>
       </dl>
+      <div class="back-to-top"><a href="#glance">[back to top]</a></div>
     </div>
   </xsl:template>
   
@@ -190,8 +193,13 @@
       </h3>
       <dl>
         <xsl:apply-templates select="@rdf:about"/>
-        <xsl:apply-templates select="rdfs:comment|rdfs:isDefinedBy|rdfs:subClassOf|rdfs:subClassOf|rdfs:domain|rdfs:range|rdfs:seeAlso|owl:sameAs"/>
+        <xsl:apply-templates select="rdfs:comment"/>
+        <xsl:apply-templates select="rdfs:seeAlso"/>
+        <xsl:apply-templates select="rdfs:subPropertyOf"/>
+        <xsl:apply-templates select="rdfs:domain"/>
+        <xsl:apply-templates select="rdfs:range"/>
       </dl>
+      <div class="back-to-top"><a href="#glance">[back to top]</a></div>
     </div>
   </xsl:template>
 
