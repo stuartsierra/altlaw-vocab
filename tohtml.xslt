@@ -135,6 +135,43 @@
       <dl>
         <xsl:apply-templates select="@rdf:about"/>
         <xsl:apply-templates select="rdfs:comment|rdfs:isDefinedBy|rdfs:subClassOf|rdfs:subClassOf|rdfs:domain|rdfs:range|rdfs:seeAlso|owl:sameAs"/>
+        <xsl:variable name="myurl">
+          <xsl:value-of select="@rdf:about"/>
+        </xsl:variable>
+        <xsl:if test="//rdfs:Property[rdfs:domain/@rdf:resource = $myurl]">
+          <dt>In domain of: </dt>
+          <dd>
+            <xsl:for-each select="//rdfs:Property[rdfs:domain/@rdf:resource = $myurl]">
+              <span>
+                <a>
+                  <xsl:attribute name="href">
+                    <xsl:text>#term-</xsl:text>
+                    <xsl:value-of select="fn:replace(rdfs:label,':','-')"/>
+                  </xsl:attribute>
+                  <xsl:value-of select="rdfs:label"/>
+                </a>
+              </span>
+              <xsl:text> </xsl:text>
+            </xsl:for-each>
+          </dd>
+        </xsl:if>
+        <xsl:if test="//rdfs:Property[rdfs:range/@rdf:resource = $myurl]">
+          <dt>In range of: </dt>
+          <dd>
+            <xsl:for-each select="//rdfs:Property[rdfs:range/@rdf:resource = $myurl]">
+              <span>
+                <a>
+                  <xsl:attribute name="href">
+                    <xsl:text>#term-</xsl:text>
+                    <xsl:value-of select="fn:replace(rdfs:label,':','-')"/>
+                  </xsl:attribute>
+                  <xsl:value-of select="rdfs:label"/>
+                </a>
+              </span>
+              <xsl:text> </xsl:text>
+            </xsl:for-each>
+          </dd>
+        </xsl:if>
       </dl>
     </div>
   </xsl:template>
@@ -185,24 +222,64 @@
   <xsl:template match="rdfs:domain">
     <dt>Domain: </dt>
     <dd>
-      <a>
-        <xsl:attribute name="href">
-          <xsl:value-of select="@rdf:resource"/>
-        </xsl:attribute>
-        <xsl:value-of select="@rdf:resource"/>
-      </a>
+      <xsl:choose>
+        <xsl:when test="fn:starts-with(@rdf:resource, 'http://id.altlaw.org/terms/')">
+          <span>
+            <a>
+              <xsl:variable name="termname">
+                <xsl:value-of select="fn:replace(@rdf:resource,'http://id.altlaw.org/terms/','')"/>
+              </xsl:variable>
+              <xsl:attribute name="href">
+                <xsl:text>#term-</xsl:text>
+                <xsl:value-of select="$termname"/>
+              </xsl:attribute>
+              <xsl:value-of select="$termname"/>
+            </a>
+          </span>
+        </xsl:when>
+        <xsl:otherwise>
+          <span>
+            <a>
+              <xsl:attribute name="href">
+                <xsl:value-of select="@rdf:resource"/>
+              </xsl:attribute>
+              <xsl:value-of select="@rdf:resource"/>
+            </a>
+          </span>
+        </xsl:otherwise>
+      </xsl:choose>
     </dd>
   </xsl:template>
   
   <xsl:template match="rdfs:range">
     <dt>Range: </dt>
     <dd>
-      <a>
-        <xsl:attribute name="href">
-          <xsl:value-of select="@rdf:resource"/>
-        </xsl:attribute>
-        <xsl:value-of select="@rdf:resource"/>
-      </a>
+      <xsl:choose>
+        <xsl:when test="fn:starts-with(@rdf:resource, 'http://id.altlaw.org/terms/')">
+          <span>
+            <a>
+              <xsl:variable name="termname">
+                <xsl:value-of select="fn:replace(@rdf:resource,'http://id.altlaw.org/terms/','')"/>
+              </xsl:variable>
+              <xsl:attribute name="href">
+                <xsl:text>#term-</xsl:text>
+                <xsl:value-of select="$termname"/>
+              </xsl:attribute>
+              <xsl:value-of select="$termname"/>
+            </a>
+          </span>
+        </xsl:when>
+        <xsl:otherwise>
+          <span>
+            <a>
+              <xsl:attribute name="href">
+                <xsl:value-of select="@rdf:resource"/>
+              </xsl:attribute>
+              <xsl:value-of select="@rdf:resource"/>
+            </a>
+          </span>
+        </xsl:otherwise>
+      </xsl:choose>
     </dd>
   </xsl:template>
 
