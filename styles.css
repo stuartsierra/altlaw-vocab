@@ -1,10 +1,11 @@
-* {
- font-family: Arial, sans-serif;
+body {
+ font-family: Helvetica, Arial, sans-serif;
+ font-size: small;
 }
 .quicklinks, .rdfclasses, .rdfproperties, .rdfborrowed {
+ clear: both;
  margin: 2em 0 0 0;
  float: left;
- width: 100%;
 }
 .quicklinks span, dd span {
  padding: 0 0.5em 0 0;
@@ -49,4 +50,7 @@ dd {
 p {
  margin: 0;
  padding: 0 0 0.5em 0;
+}
+.back-to-top {
+ text-align: right;
 }
