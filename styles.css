@@ -6,7 +6,7 @@
  float: left;
  width: 100%;
 }
-.quicklinks span {
+.quicklinks span, dd span {
  padding: 0 0.5em 0 0;
 }
 .quicklinks h2 {
@@ -35,14 +35,14 @@ dl {
  padding: 0;
 }
 dt {
- width: 5em;
+ width: 7em;
  float: left;
  margin: 0 0 0 0;
  padding: .25em;
 }
 dd {
  float: left;
- width: 32em;
+ width: 30em;
  margin: 0 0 0 0;
  padding: .25em;
 }
