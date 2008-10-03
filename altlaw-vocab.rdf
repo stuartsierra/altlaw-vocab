@@ -13,8 +13,8 @@
   <!-- The Ontology itself -->
 
   <owl:Ontology rdf:about="http://id.altlaw.org/terms/">
-    <dcterms:title>AltLaw.org Vocabulary [DRAFT]</dcterms:title>
-    <dcterms:description>
+    <rdfs:label>AltLaw.org Vocabulary [DRAFT]</rdfs:label>
+    <rdfs:comment>
       An RDF vocabulary for Semantic Web applications using data
       provided by AltLaw.org.  The classes and properties defined here
       are intended to supplement and be used alongside other metadata
@@ -33,13 +33,13 @@
 
       The RDF/XML source of this vocabulary can be found at
       http://github.com/lawcommons/altlaw-vocab/tree/master/altlaw-vocab-1.rdf
-    </dcterms:description>
+    </rdfs:comment>
   </owl:Ontology>
 
 
   <!-- CLASSES -->
 
-  <rdfs:Class rdf:about="http://id.altlaw.org/terms/Court">
+  <owl:Class rdf:about="http://id.altlaw.org/terms/Court">
     <rdfs:label>Court</rdfs:label>
     <rdfs:comment>
       Any court.
@@ -47,9 +47,9 @@
     <rdfs:seeAlso rdf:resource="http://altlaw.org/courts"/>
     <rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Organization"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Class>
+  </owl:Class>
 
-  <rdfs:Class rdf:about="http://id.altlaw.org/terms/Case">
+  <owl:Class rdf:about="http://id.altlaw.org/terms/Case">
     <rdfs:label>Case</rdfs:label>
     <rdfs:comment>
       A single dispute among two or more parties.  It may be argued in
@@ -57,9 +57,9 @@
       Judgments.
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Class>
+  </owl:Class>
 
-  <rdfs:Class rdf:about="http://id.altlaw.org/terms/Judgment">
+  <owl:Class rdf:about="http://id.altlaw.org/terms/Judgment">
     <rdfs:label>Judgment</rdfs:label>
     <rdfs:comment>
       A determination by a Court on matters put before it.
@@ -69,9 +69,9 @@
       written Decisions.  A Judgment may dispose of multiple Cases.
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Class>
+  </owl:Class>
 
-  <rdfs:Class rdf:about="http://id.altlaw.org/terms/Decision">
+  <owl:Class rdf:about="http://id.altlaw.org/terms/Decision">
     <rdfs:label>Decision</rdfs:label>
     <rdfs:comment>
       The written form of a Judgment.  A decision may be a complete
@@ -82,9 +82,9 @@
     <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/LegalCaseDocument"/>
     <rdfs:seeAlso rdf:resource="http://bibliontology.com/"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Class>
+  </owl:Class>
 
-  <rdfs:Class rdf:about="http://id.altlaw.org/terms/Opinion">
+  <owl:Class rdf:about="http://id.altlaw.org/terms/Opinion">
     <rdfs:label>Opinion</rdfs:label>
     <rdfs:comment>
       A single written screed within a Decision.  Represents the view
@@ -93,9 +93,9 @@
     </rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/LegalCaseDocument"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Class>
+  </owl:Class>
 
-  <rdfs:Class rdf:about="http://id.altlaw.org/terms/Errata">
+  <owl:Class rdf:about="http://id.altlaw.org/terms/Errata">
     <rdfs:label>Errata</rdfs:label>
     <rdfs:comment>
       A document listing corrections, modifications, or additions to
@@ -105,17 +105,17 @@
     </rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Class>
+  </owl:Class>
 
-  <rdfs:Class rdf:about="http://id.altlaw.org/terms/Process">
+  <owl:Class rdf:about="http://id.altlaw.org/terms/Process">
     <rdfs:label>Process</rdfs:label>
     <rdfs:comment>
       A single execution of an automated operation.
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Class>
+  </owl:Class>
 
-  <rdfs:Class rdf:about="http://id.altlaw.org/terms/Crawl">
+  <owl:Class rdf:about="http://id.altlaw.org/terms/Crawl">
     <rdfs:label>Crawl</rdfs:label>
     <rdfs:comment>
       A Crawl is a single run of an automated process that retrieves
@@ -123,9 +123,9 @@
     </rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://id.altlaw.org/terms/Process"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Class>
+  </owl:Class>
 
-  <rdfs:Class rdf:about="http://id.altlaw.org/terms/File">
+  <owl:Class rdf:about="http://id.altlaw.org/terms/File">
     <rdfs:label>File</rdfs:label>
     <rdfs:comment>
       A concrete digital representation of a document.  As opposed to
@@ -134,9 +134,9 @@
       encoding.  OAI4Courts calls this a "writing".
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Class>
+  </owl:Class>
 
-  <rdfs:Class rdf:about="http://id.altlaw.org/terms/Download">
+  <owl:Class rdf:about="http://id.altlaw.org/terms/Download">
     <rdfs:label>Download</rdfs:label>
     <rdfs:comment>
       Record of downloading a file from an Internet resource.  Used
@@ -144,7 +144,7 @@
     </rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://id.altlaw.org/terms/Process"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Class>
+  </owl:Class>
 
 
   <!-- PROPERTIES -->
