@@ -1,25 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rdf:RDF [
+    <!ENTITY alt "http://id.altlaw.org/terms/">
+    <!ENTITY bibo "http://purl.org/ontology/bibo/">
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/">
+    <!ENTITY dcterms "http://purl.org/dc/terms/">
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/">
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#">
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#">
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
+    <!ENTITY vann "http://purl.org/vocab/vann/">
+    <!ENTITY dcdoc "http://dublincore.org/documents/dcmi-terms/">
+]>
 <rdf:RDF 
-   xmlns:alt="http://id.altlaw.org/terms/"
-   xmlns:bibo="http://purl.org/ontology/bibo/"
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:foaf="http://xmlns.com/foaf/0.1/"
-   xmlns:owl="http://www.w3.org/2002/07/owl#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+    xmlns:alt="&alt;"
+    xmlns:bibo="&bibo;"
+    xmlns:dcterms="&dcterms;"
+    xmlns:foaf="&foaf;"
+    xmlns:owl="&owl;"
+    xmlns:rdf="&rdf;"
+    xmlns:rdfs="&rdfs;"
+    xmlns:xsd="&xsd;"
+    xmlns:vann="&vann;">
 
 
   <!-- The Ontology itself -->
 
-  <owl:Ontology rdf:about="http://id.altlaw.org/terms/">
+  <owl:Ontology rdf:about="&alt;">
     <rdfs:label>AltLaw.org Vocabulary [DRAFT]</rdfs:label>
+    <vann:preferredNamespacePrefix>alt</vann:preferredNamespacePrefix>
     <rdfs:comment>
       An RDF vocabulary for Semantic Web applications using data
       provided by AltLaw.org.  The classes and properties defined here
       are intended to supplement and be used alongside other metadata
-      vocabularies such as Dublin Core (http://purl.org/dc/terms/) and
-      Bibliontology (http://purl.org/ontology/bibo/).
+      vocabularies such as Dublin Core (&dcterms;) and
+      Bibliontology (&bibo;).
 
       This vocabulary borrows some definitions from the OAI4Courts draft
       specification at
@@ -32,34 +47,34 @@
       THIS VOCABULARY IS EXPERIMENTAL AND SUBJECT TO MAJOR CHANGES.
 
       The RDF/XML source of this vocabulary can be found at
-      http://github.com/lawcommons/altlaw-vocab/tree/master/altlaw-vocab-1.rdf
+      http://github.com/lawcommons/altlaw-vocab/tree/master/altlaw-vocab.rdf
     </rdfs:comment>
   </owl:Ontology>
 
 
   <!-- CLASSES -->
 
-  <owl:Class rdf:about="http://id.altlaw.org/terms/Court">
+  <owl:Class rdf:about="&alt;Court">
     <rdfs:label>Court</rdfs:label>
     <rdfs:comment>
       Any court.
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="http://altlaw.org/courts"/>
-    <rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Organization"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
+    <rdfs:subClassOf rdf:resource="&foaf;Organization"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
-  <owl:Class rdf:about="http://id.altlaw.org/terms/Case">
+  <owl:Class rdf:about="&alt;Case">
     <rdfs:label>Case</rdfs:label>
     <rdfs:comment>
       A single dispute among two or more parties.  It may be argued in
       multiple Courts at different times, and may result in multiple
       Judgments.
     </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
-  <owl:Class rdf:about="http://id.altlaw.org/terms/Judgment">
+  <owl:Class rdf:about="&alt;Judgment">
     <rdfs:label>Judgment</rdfs:label>
     <rdfs:comment>
       A determination by a Court on matters put before it.
@@ -68,34 +83,34 @@
       in a Decision.  However, Judgments may exist that have no
       written Decisions.  A Judgment may dispose of multiple Cases.
     </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
-  <owl:Class rdf:about="http://id.altlaw.org/terms/Decision">
+  <owl:Class rdf:about="&alt;Decision">
     <rdfs:label>Decision</rdfs:label>
     <rdfs:comment>
       The written form of a Judgment.  A decision may be a complete
       document in and of itself, or it contain multiple Opinions with
       "dcterms:hasPart".
     </rdfs:comment>
-    <owl:sameAs rdf:resource="http://purl.org/ontology/bibo/LegalDecision"/>
-    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/LegalCaseDocument"/>
+    <owl:equivalentClass rdf:resource="&bibo;LegalDecision"/>
+    <rdfs:subClassOf rdf:resource="&bibo;LegalCaseDocument"/>
     <rdfs:seeAlso rdf:resource="http://bibliontology.com/"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
-  <owl:Class rdf:about="http://id.altlaw.org/terms/Opinion">
+  <owl:Class rdf:about="&alt;Opinion">
     <rdfs:label>Opinion</rdfs:label>
     <rdfs:comment>
       A single written screed within a Decision.  Represents the view
       of one judge or an agreement among judges, such as a majority
       opinion, concurrence, or dissent.
     </rdfs:comment>
-    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/LegalCaseDocument"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
+    <rdfs:subClassOf rdf:resource="&bibo;LegalCaseDocument"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
-  <owl:Class rdf:about="http://id.altlaw.org/terms/Errata">
+  <owl:Class rdf:about="&alt;Errata">
     <rdfs:label>Errata</rdfs:label>
     <rdfs:comment>
       A document listing corrections, modifications, or additions to
@@ -103,29 +118,29 @@
       machine-readable form such as a diff, but courts do not publish
       that way.
     </rdfs:comment>
-    <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
+    <rdfs:subClassOf rdf:resource="&bibo;Document"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
-  <owl:Class rdf:about="http://id.altlaw.org/terms/Process">
+  <owl:Class rdf:about="&alt;Process">
     <rdfs:label>Process</rdfs:label>
     <rdfs:comment>
       A single execution of an automated operation.
     </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
-  <owl:Class rdf:about="http://id.altlaw.org/terms/Crawl">
+  <owl:Class rdf:about="&alt;Crawl">
     <rdfs:label>Crawl</rdfs:label>
     <rdfs:comment>
       A Crawl is a single run of an automated process that retrieves
       and processes Internet resources.
     </rdfs:comment>
-    <rdfs:subClassOf rdf:resource="http://id.altlaw.org/terms/Process"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
+    <rdfs:subClassOf rdf:resource="&alt;Process"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
-  <owl:Class rdf:about="http://id.altlaw.org/terms/File">
+  <owl:Class rdf:about="&alt;File">
     <rdfs:label>File</rdfs:label>
     <rdfs:comment>
       A concrete digital representation of a document.  As opposed to
@@ -133,35 +148,35 @@
       File is a finite sequence of bytes in a particular format and/or
       encoding.  OAI4Courts calls this a "writing".
     </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
-  <owl:Class rdf:about="http://id.altlaw.org/terms/Download">
+  <owl:Class rdf:about="&alt;Download">
     <rdfs:label>Download</rdfs:label>
     <rdfs:comment>
       Record of downloading a file from an Internet resource.  Used
       for logging HTTP requests/responses.
     </rdfs:comment>
-    <rdfs:subClassOf rdf:resource="http://id.altlaw.org/terms/Process"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
+    <rdfs:subClassOf rdf:resource="&alt;Process"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
 
   <!-- PROPERTIES -->
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/court">
+  <owl:ObjectProperty rdf:about="&alt;court">
     <rdfs:label>court</rdfs:label>
     <rdfs:comment>
       The court which originated a Judgment.
     </rdfs:comment>
-    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/coverage"/>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Judgment"/>
-    <rdfs:range rdf:resource="http://id.altlaw.org/terms/Court"/>
-    <owl:sameAs rdf:resource="http://purl.org/ontology/bibo/court"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Property>
+    <rdfs:subPropertyOf rdf:resource="&dcterms;coverage"/>
+    <rdfs:domain rdf:resource="&alt;Judgment"/>
+    <rdfs:range rdf:resource="&alt;Court"/>
+    <owl:equivalentProperty rdf:resource="&bibo;court"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:ObjectProperty>
   
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/docketNumber">
+  <owl:DatatypeProperty rdf:about="&alt;docketNumber">
     <rdfs:label>docketNumber</rdfs:label>
     <rdfs:comment>
       The docket number associated with a Document or Case.
@@ -173,12 +188,12 @@
       string also should not contain abbreviations for "Number" such
       as "No." or "Nos.".
     </rdfs:comment>
-    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/identifier"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Property>
+    <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
+    <rdfs:range rdf:resource="&xsd;string"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/bluebookIdentifier">
+  <owl:DatatypeProperty rdf:about="&alt;bluebookIdentifier">
     <rdfs:label>bluebookIdentifier</rdfs:label>
     <rdfs:comment>
       A citation to a decision in the form described by "A Uniform
@@ -195,61 +210,61 @@
       citations, but a single decision may have multiple
       bluebookIdentifiers, one for each parallel citation.
     </rdfs:comment>
-    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/identifier"/>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Decision"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Property>
+    <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
+    <rdfs:domain rdf:resource="&alt;Decision"/>
+    <rdfs:range rdf:resource="&xsd;string"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/precedential">
+  <owl:DatatypeProperty rdf:about="&alt;precedential">
     <rdfs:label>precedential</rdfs:label>
     <rdfs:comment>
       Boolean indicating whether or not a decision is considered
       "precedential" (or, equivalently, "published") by the court
       that issued it.
     </rdfs:comment>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Judgment"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Property>
+    <rdfs:domain rdf:resource="&alt;Judgment"/>
+    <rdfs:range rdf:resource="&xsd;boolean"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/decided">
+  <owl:DatatypeProperty rdf:about="&alt;decided">
     <rdfs:label>decided</rdfs:label>
     <rdfs:comment>
       Date that a court decision/ruling/order was decided.  May or may
       not be the same as date of publication ("dcterms:issued").  This
       is the preferred date to use when describing a court decision.
     </rdfs:comment>
-    <rdfs:subPropertOf rdf:resource="http://purl.org/dc/terms/date"/>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Judgment"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Property>
+    <rdfs:subPropertOf rdf:resource="&dcterms;date"/>
+    <rdfs:domain rdf:resource="&alt;Judgment"/>
+    <rdfs:range rdf:resource="&xsd;date"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/argued">
+  <owl:DatatypeProperty rdf:about="&alt;argued">
     <rdfs:label>argued</rdfs:label>
     <rdfs:comment>
       Date that a case was argued before a court.  A case may have
       many dates of argument.
     </rdfs:comment>
-    <rdfs:subPropertOf rdf:resource="http://purl.org/dc/terms/date"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
-    <owl:sameAs rdf:resource="http://purl.org/ontology/bibo/argued"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Property>
+    <rdfs:subPropertOf rdf:resource="&dcterms;date"/>
+    <rdfs:range rdf:resource="&xsd;date"/>
+    <owl:equivalentProperty rdf:resource="&bibo;argued"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/amends">
+  <owl:ObjectProperty rdf:about="&alt;amends">
     <rdfs:label>amends</rdfs:label>
     <rdfs:comment>
       Link between an Errata document and the Document it
       modifies/corrects.
     </rdfs:comment>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Errata"/>
-    <rdfs:range rdf:resource="http://purl.org/ontology/bibo/Document"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Property>
+    <rdfs:domain rdf:resource="&alt;Errata"/>
+    <rdfs:range rdf:resource="&bibo;Document"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:ObjectProperty>
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/mimeType">
+  <owl:DatatypeProperty rdf:about="&alt;mimeType">
     <rdfs:label>mimeType</rdfs:label>
     <rdfs:comment>
       The MIME type of a File, a literal string such as "application/pdf".
@@ -259,13 +274,13 @@
       range.
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="http://www.iana.org/assignments/media-types/"/>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/File"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/format"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Property>
+    <rdfs:domain rdf:resource="&alt;File"/>
+    <rdfs:range rdf:resource="&xsd;string"/>
+    <rdfs:subPropertyOf rdf:resource="&dc;format"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/charset">
+  <owl:DatatypeProperty rdf:about="&alt;charset">
     <rdfs:label>charset</rdfs:label>
     <rdfs:comment>
       The binary character encoding used by a File.  The value of this
@@ -278,112 +293,112 @@
       "windows-1252", and "UTF-8".
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="http://www.iana.org/assignments/character-sets"/>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/File"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/format"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Property>
+    <rdfs:domain rdf:resource="&alt;File"/>
+    <rdfs:range rdf:resource="&xsd;string"/>
+    <rdfs:subPropertyOf rdf:resource="&dc;format"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/started">
+  <owl:DatatypeProperty rdf:about="&alt;started">
     <rdfs:label>started</rdfs:label>
     <rdfs:comment>
       Timestamp when a process began.
     </rdfs:comment>
-    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/created"/>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Process"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Property>
+    <rdfs:subPropertyOf rdf:resource="&dcterms;created"/>
+    <rdfs:domain rdf:resource="&alt;Process"/>
+    <rdfs:range rdf:resource="&xsd;dateTime"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/finished">
+  <owl:DatatypeProperty rdf:about="&alt;finished">
     <rdfs:label>finished</rdfs:label>
     <rdfs:comment>
       Timestamp when a process was completed.
     </rdfs:comment>
-    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/date"/>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Process"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Property>
+    <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+    <rdfs:domain rdf:resource="&alt;Process"/>
+    <rdfs:range rdf:resource="&xsd;dateTime"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/discovered">
+  <owl:DatatypeProperty rdf:about="&alt;discovered">
     <rdfs:label>discovered</rdfs:label>
     <rdfs:comment>
       The "discovered" property links a Crawl to the entities that it
       finds.
     </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Crawl"/>
-  </rdfs:Property>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+    <rdfs:domain rdf:resource="&alt;Crawl"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/downloaded">
+  <owl:ObjectProperty rdf:about="&alt;downloaded">
     <rdfs:label>downloaded</rdfs:label>
     <rdfs:comment>
       A single Download performed during a Crawl.
     </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Crawl"/>
-    <rdfs:range rdf:resource="http://id.altlaw.org/terms/Download"/>
-  </rdfs:Property>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+    <rdfs:domain rdf:resource="&alt;Crawl"/>
+    <rdfs:range rdf:resource="&alt;Download"/>
+  </owl:ObjectProperty>
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/url">
+  <owl:DatatypeProperty rdf:about="&alt;url">
     <rdfs:label>url</rdfs:label>
     <rdfs:comment>
       The URL from which a Download was retrieved.
     </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Download"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdfs:Property>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+    <rdfs:domain rdf:resource="&alt;Download"/>
+    <rdfs:range rdf:resource="&xsd;string"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/httpRequest">
+  <owl:DatatypeProperty rdf:about="&alt;httpRequest">
     <rdfs:label>httpRequest</rdfs:label>
     <rdfs:comment>
       A complete log of the HTTP request sent to a remote server,
       containing both HTTP headers and entity body.
     </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Download"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdfs:Property>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+    <rdfs:domain rdf:resource="&alt;Download"/>
+    <rdfs:range rdf:resource="&xsd;string"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/httpResponse">
+  <owl:DatatypeProperty rdf:about="&alt;httpResponse">
     <rdfs:label>httpResponse</rdfs:label>
     <rdfs:comment>
       A complete log of the HTTP response received from a remote
       server, containing both HTTP headers and entity body.
     </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Download"/>
-    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-  </rdfs:Property>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+    <rdfs:domain rdf:resource="&alt;Download"/>
+    <rdfs:range rdf:resource="&xsd;string"/>
+  </owl:DatatypeProperty>
 
   <!-- PROPERTIES DEFINED IN OTHER ONTOLOGIES -->
 
-  <rdfs:Property rdf:about="http://purl.org/dc/terms/date">
+  <owl:DatatypeProperty rdf:about="&dcterms;date">
     <rdfs:label>dcterms:date</rdfs:label>
     <rdfs:comment>
       The date of a decision.  Use this property only when more
       specific dates, such as "decided" or "issued", are unknown.
       Datatype should be "xsd:date".
     </rdfs:comment>
-    <rdfs:seeAlso rdf:resource="http://dublincore.org/documents/dcmi-terms/"/>
-    <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
-    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/date"/>
-  </rdfs:Property>
+    <rdfs:seeAlso rdf:resource="&dcdoc;"/>
+    <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
+    <rdfs:subPropertyOf rdf:resource="&dc;date"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://purl.org/dc/terms/issued">
+  <owl:DatatypeProperty rdf:about="&dcterms;issued">
     <rdfs:label>dcterms:issued</rdfs:label>
     <rdfs:comment>
       The date a Judgment was published.  Use this property only when
       the date of publication is different from the date "decided".
     </rdfs:comment>
-    <rdfs:seeAlso rdf:resource="http://dublincore.org/documents/dcmi-terms/"/>
-    <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
-    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/date"/>
-  </rdfs:Property>
+    <rdfs:seeAlso rdf:resource="&dcdoc;"/>
+    <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
+    <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://purl.org/dc/terms/issued">
+  <owl:DatatypeProperty rdf:about="&dcterms;issued">
     <rdfs:label>dcterms:title</rdfs:label>
     <rdfs:comment>
       The title of a case.  The value of this property should be the
@@ -391,58 +406,58 @@
       al. v. Board of Education of Topeka et al."  A case should have
       only one full title.
     </rdfs:comment>
-    <rdfs:seeAlso rdf:resource="http://dublincore.org/documents/dcmi-terms/"/>
-    <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
-    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/title"/>
-  </rdfs:Property>
+    <rdfs:seeAlso rdf:resource="&dcdoc;"/>
+    <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
+    <rdfs:subPropertyOf rdf:resource="&dc;title"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://purl.org/ontology/bibo/shortTitle">
+  <owl:DatatypeProperty rdf:about="&bibo;shortTitle">
     <rdfs:label>bibo:shortTitle</rdfs:label>
     <rdfs:comment>
       A shortened title of a case, as commonly used when citing or
       discussing the case, e.g. "Brown v. Board of Education" or just
       "Brown".  A case may have multiple short titles.
     </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="http://purl.org/ontology/bibo/"/>
+    <rdfs:isDefinedBy rdf:resource="&bibo;"/>
     <rdfs:seeAlso rdf:resource="http://bibliontology.com/"/>
-    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/alternative"/>
-  </rdfs:Property>
+    <rdfs:subPropertyOf rdf:resource="&dcterms;alternative"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://purl.org/dc/terms/hasFormat">
+  <owl:ObjectProperty rdf:about="&dcterms;hasFormat">
     <rdfs:label>dcterms:hasFormat</rdfs:label>
     <rdfs:comment>
       Link from an abstract entity, such as a Decision, to its
       concrete representation, such as a File.
     </rdfs:comment>
-    <rdfs:seeAlso rdf:resource="http://dublincore.org/documents/dcmi-terms/"/>
-    <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
-    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/relation"/>
-  </rdfs:Property>
+    <rdfs:seeAlso rdf:resource="&dcdoc;"/>
+    <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
+    <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
+  </owl:ObjectProperty>
 
-  <rdfs:Property rdf:about="http://purl.org/dc/terms/abstract">
+  <owl:DatatypeProperty rdf:about="&dcterms;abstract">
     <rdfs:label>dcterms:abstract</rdfs:label>
     <rdfs:comment>
       An abstract or summary of a decision.  Provided by some court
       web sites, but not considered part of the official decision.
     </rdfs:comment>
-    <rdfs:seeAlso rdf:resource="http://dublincore.org/documents/dcmi-terms/"/>
-    <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
-    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/description"/>
-  </rdfs:Property>
+    <rdfs:seeAlso rdf:resource="&dcdoc;"/>
+    <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
+    <rdfs:subPropertyOf rdf:resource="&dcterms;description"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://purl.org/dc/terms/subject">
+  <owl:DatatypeProperty rdf:about="&dcterms;subject">
     <rdfs:label>dcterms:subject</rdfs:label>
     <rdfs:comment>
       A keyword or broad topic heading for the case, such as
       "criminal" or "immigration".  Provided by some court web sites,
       but not considered part of the official decision.
     </rdfs:comment>
-    <rdfs:seeAlso rdf:resource="http://dublincore.org/documents/dcmi-terms/"/>
-    <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
-    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/subject"/>
-  </rdfs:Property>
+    <rdfs:seeAlso rdf:resource="&dcdoc;"/>
+    <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
+    <rdfs:subPropertyOf rdf:resource="&dc;subject"/>
+  </owl:DatatypeProperty>
 
-  <rdfs:Property rdf:about="http://purl.org/dc/terms/issued">
+  <owl:DatatypeProperty rdf:about="&dcterms;issued">
     <rdfs:label>dcterms:description</rdfs:label>
     <rdfs:comment>
       Free-text field to store any additional metadata about a case.
@@ -453,9 +468,9 @@
       contains, it may prefix the contents with an identifier in ALL
       CAPS, such as "APPEAL FROM" or "HEARD BY".
     </rdfs:comment>
-    <rdfs:seeAlso rdf:resource="http://dublincore.org/documents/dcmi-terms/"/>
-    <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
-    <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/elements/1.1/description"/>
-  </rdfs:Property>
+    <rdfs:seeAlso rdf:resource="&dcdoc;"/>
+    <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
+    <rdfs:subPropertyOf rdf:resource="&dc;description"/>
+  </owl:DatatypeProperty>
 
 </rdf:RDF>
