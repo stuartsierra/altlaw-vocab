@@ -80,10 +80,6 @@
       </head>
       <body>
         <xsl:apply-templates select="//owl:Ontology"/>
-        <p>
-          <xsl:text>This HTML documentation was generated from the original RDF/XML sources on </xsl:text>
-          <xsl:value-of select="fn:current-dateTime()"/>
-        </p>
         <div class="quicklinks" id="glance">
           <h2>Terms at a Glance</h2>
           <p>
@@ -129,10 +125,16 @@
     <h1>
       <xsl:apply-templates/>
     </h1>
+    <h2>
+      <xsl:text>HTML generated at </xsl:text>
+      <xsl:value-of select="fn:current-dateTime()"/>
+    </h2>
   </xsl:template>
 
   <xsl:template match="dcterms:description">
-    <xsl:call-template name="paragraphs"/>
+    <div class="description">
+      <xsl:call-template name="paragraphs"/>
+    </div>
   </xsl:template>
 
   <xsl:template match="rdfs:comment">
