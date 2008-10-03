@@ -74,6 +74,18 @@
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
+  <owl:Class rdf:about="&alt;Proceeding">
+    <rdfs:label>Proceeding</rdfs:label>
+    <rdfs:comment>
+      The consideration of a Case by a Court, usually resulting in a
+      Judgment.
+
+      A Proceeding is an abstract concept, independent of the actual
+      hearings at which the case is argued.
+    </rdfs:comment>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:Class>
+
   <owl:Class rdf:about="&alt;Judgment">
     <rdfs:label>Judgment</rdfs:label>
     <rdfs:comment>
