@@ -13,7 +13,7 @@
   <!-- The Ontology itself -->
 
   <owl:Ontology rdf:about="http://id.altlaw.org/terms/">
-    <dcterms:title>AltLaw.org Vocabulary [DRAFT] Version 1</dcterms:title>
+    <dcterms:title>AltLaw.org Vocabulary [DRAFT]</dcterms:title>
     <dcterms:description>
       An RDF vocabulary for Semantic Web applications using data
       provided by AltLaw.org.  The classes and properties defined here
