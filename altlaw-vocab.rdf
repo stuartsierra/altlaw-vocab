@@ -39,13 +39,34 @@
 
   <!-- CLASSES -->
 
+  <rdfs:Class rdf:about="http://id.altlaw.org/terms/Court">
+    <rdfs:label>Court</rdfs:label>
+    <rdfs:comment>
+      Any court.
+    </rdfs:comment>
+    <rdfs:seeAlso rdf:resource="http://altlaw.org/courts"/>
+    <rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Organization"/>
+    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
+  </rdfs:Class>
+
   <rdfs:Class rdf:about="http://id.altlaw.org/terms/Case">
     <rdfs:label>Case</rdfs:label>
     <rdfs:comment>
       A single dispute among two or more parties.  It may be argued in
-      multiple courts at different times, and may result in multiple
-      decisions.  Not currently used by AltLaw, but defined in
-      OAI4Courts.
+      multiple Courts at different times, and may result in multiple
+      Judgments.
+    </rdfs:comment>
+    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
+  </rdfs:Class>
+
+  <rdfs:Class rdf:about="http://id.altlaw.org/terms/Judgment">
+    <rdfs:label>Judgment</rdfs:label>
+    <rdfs:comment>
+      A determination by a Court on matters put before it.
+
+      A Judgment is an abstract concept, which takes its written form
+      in a Decision.  However, Judgments may exist that have no
+      written Decisions.  A Judgment may dispose of multiple Cases.
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Class>
@@ -53,11 +74,9 @@
   <rdfs:Class rdf:about="http://id.altlaw.org/terms/Decision">
     <rdfs:label>Decision</rdfs:label>
     <rdfs:comment>
-      A single decision released by a court, which may resolve
-      multiple cases and contain multiple opinions, concurrences, and
-      dissents.  This is the primary type of document handled by
-      AltLaw.  A decision may be a document in and of itself, or it
-      may be a container for multiple Opinions.
+      The written form of a Judgment.  A decision may be a complete
+      document in and of itself, or it contain multiple Opinions with
+      "dcterms:hasPart".
     </rdfs:comment>
     <owl:sameAs rdf:resource="http://purl.org/ontology/bibo/LegalDecision"/>
     <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/LegalCaseDocument"/>
@@ -70,8 +89,7 @@
     <rdfs:comment>
       A single written screed within a Decision.  Represents the view
       of one judge or an agreement among judges, such as a majority
-      opinion, concurrence, or dissent.  Not currently used by AltLaw,
-      but defined in OAI4Courts.
+      opinion, concurrence, or dissent.
     </rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/LegalCaseDocument"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
@@ -86,16 +104,6 @@
       that way.
     </rdfs:comment>
     <rdfs:subClassOf rdf:resource="http://purl.org/ontology/bibo/Document"/>
-    <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
-  </rdfs:Class>
-
-  <rdfs:Class rdf:about="http://id.altlaw.org/terms/Court">
-    <rdfs:label>Court</rdfs:label>
-    <rdfs:comment>
-      Any court.
-    </rdfs:comment>
-    <rdfs:seeAlso rdf:resource="http://altlaw.org/courts"/>
-    <rdfs:subClassOf rdf:resource="http://xmlns.com/foaf/0.1/Organization"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Class>
 
@@ -144,20 +152,22 @@
   <rdfs:Property rdf:about="http://id.altlaw.org/terms/court">
     <rdfs:label>court</rdfs:label>
     <rdfs:comment>
-      The court which originated a decision.
+      The court which originated a Judgment.
     </rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/coverage"/>
+    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Judgment"/>
     <rdfs:range rdf:resource="http://id.altlaw.org/terms/Court"/>
     <owl:sameAs rdf:resource="http://purl.org/ontology/bibo/court"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
   
-  <rdfs:Property rdf:about="http://id.altlaw.org/terms/docket">
-    <rdfs:label>docket</rdfs:label>
+  <rdfs:Property rdf:about="http://id.altlaw.org/terms/docketNumber">
+    <rdfs:label>docketNumber</rdfs:label>
     <rdfs:comment>
-      The docket number associated with a case or decision.  A single
-      case or decision may have multiple docket numbers attached to
-      it.  The range of this property is any string, which may include
+      The docket number associated with a Document or Case.
+
+      A single case may have multiple docket numbers attached to it.
+      The range of this property is any string, which may include
       punctuation such as hyphens, but it should be a single docket
       number rather than a series such as "10-102; 10-103".  The
       string also should not contain abbreviations for "Number" such
@@ -186,6 +196,7 @@
       bluebookIdentifiers, one for each parallel citation.
     </rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/identifier"/>
+    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Decision"/>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
@@ -197,7 +208,7 @@
       "precedential" (or, equivalently, "published") by the court
       that issued it.
     </rdfs:comment>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Decision"/>
+    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Judgment"/>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
@@ -210,7 +221,7 @@
       is the preferred date to use when describing a court decision.
     </rdfs:comment>
     <rdfs:subPropertOf rdf:resource="http://purl.org/dc/terms/date"/>
-    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Decision"/>
+    <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Judgment"/>
     <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
@@ -230,10 +241,11 @@
   <rdfs:Property rdf:about="http://id.altlaw.org/terms/amends">
     <rdfs:label>amends</rdfs:label>
     <rdfs:comment>
-      Link between an Errata document and the document it
+      Link between an Errata document and the Document it
       modifies/corrects.
     </rdfs:comment>
     <rdfs:domain rdf:resource="http://id.altlaw.org/terms/Errata"/>
+    <rdfs:range rdf:resource="http://purl.org/ontology/bibo/Document"/>
     <rdfs:isDefinedBy rdf:resource="http://id.altlaw.org/terms/"/>
   </rdfs:Property>
 
@@ -363,7 +375,7 @@
   <rdfs:Property rdf:about="http://purl.org/dc/terms/issued">
     <rdfs:label>dcterms:issued</rdfs:label>
     <rdfs:comment>
-      The date a decision was published.  Use this property only when
+      The date a Judgment was published.  Use this property only when
       the date of publication is different from the date "decided".
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="http://dublincore.org/documents/dcmi-terms/"/>
