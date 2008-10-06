@@ -278,7 +278,6 @@
       al. v. Board of Education of Topeka et al."  A case should have
       only one full title.
     </rdfs:comment>
-    <rdfs:domain rdf:resource="&
     <rdfs:subPropertyOf rdf:resource="&dcterms;title"/>
   </owl:DatatypeProperty>
 
