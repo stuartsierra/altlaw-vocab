@@ -77,8 +77,8 @@
   <owl:Class rdf:about="&alt;Proceeding">
     <rdfs:label>Proceeding</rdfs:label>
     <rdfs:comment>
-      The consideration of a Case by a Court, usually resulting in a
-      Judgment.
+      The consideration of some matter by a Court, usually resulting
+      in a Judgment.
 
       A Proceeding is an abstract concept, independent of the actual
       hearings at which the case is argued.
@@ -107,6 +107,7 @@
     </rdfs:comment>
     <owl:equivalentClass rdf:resource="&bibo;LegalDecision"/>
     <rdfs:subClassOf rdf:resource="&bibo;LegalCaseDocument"/>
+    <rdfs:subClassOf rdf:resource="&alt;Judgment"/>
     <rdfs:seeAlso rdf:resource="http://bibliontology.com/"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
@@ -145,21 +146,10 @@
   <owl:Class rdf:about="&alt;Crawl">
     <rdfs:label>Crawl</rdfs:label>
     <rdfs:comment>
-      A Crawl is a single run of an automated process that retrieves
-      and processes Internet resources.
+      A single run of an automated process that retrieves and
+      processes Internet resources.
     </rdfs:comment>
     <rdfs:subClassOf rdf:resource="&alt;Process"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:Class>
-
-  <owl:Class rdf:about="&alt;File">
-    <rdfs:label>File</rdfs:label>
-    <rdfs:comment>
-      A concrete digital representation of a document.  As opposed to
-      the abstract concept of a document and the facts it embodies, a
-      File is a finite sequence of bytes in a particular format and/or
-      encoding.  OAI4Courts calls this a "writing".
-    </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
@@ -176,22 +166,42 @@
 
   <!-- PROPERTIES -->
 
-  <owl:ObjectProperty rdf:about="&alt;court">
-    <rdfs:label>court</rdfs:label>
+  <owl:ObjectProperty rdf:about="&alt;inCourt">
+    <rdfs:label>inCourt</rdfs:label>
     <rdfs:comment>
-      The court which originated a Judgment.
+      The court in which a Document was filed, a Judgment was given,
+      or a Proceeding was considered.
     </rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="&dcterms;coverage"/>
-    <rdfs:domain rdf:resource="&alt;Judgment"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="&alt;Judgment"/>
+          <owl:Class rdf:about="&alt;Proceeding"/>
+          <owl:Class rdf:about="&bibo;Document"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
     <rdfs:range rdf:resource="&alt;Court"/>
     <owl:equivalentProperty rdf:resource="&bibo;court"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:ObjectProperty>
+  
+  <owl:ObjectProperty rdf:about="&alt;consideredIn">
+    <rdfs:label>consideredIn</rdfs:label>
+    <rdfs:comment>
+      Links a Case to a Proceeding in a particular Court.
+    </rdfs:comment>
+    <rdfs:domain rdf:resource="&alt;Case"/>
+    <rdfs:range rdf:resource="&alt;Proceeding"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:ObjectProperty>
   
   <owl:DatatypeProperty rdf:about="&alt;docketNumber">
     <rdfs:label>docketNumber</rdfs:label>
     <rdfs:comment>
-      The docket number associated with a Document or Case.
+      The court-assigned docket number associated with a Document or
+      Proceeding.
 
       A single case may have multiple docket numbers attached to it.
       The range of this property is any string, which may include
@@ -201,6 +211,26 @@
       as "No." or "Nos.".
     </rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="&bibo;Document"/>
+          <owl:Class rdf:about="&alt;Judgment"/>
+          <owl:Class rdf:about="&alt;Proceeding"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+    <rdfs:range rdf:resource="&xsd;string"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="&alt;documentNumber">
+    <rdfs:label>documentNumber</rdfs:label>
+    <rdfs:comment>
+      The court-assigned document number within a docket.
+    </rdfs:comment>
+    <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
+    <rdfs:domain rdf:resource="&bibo;Document"/>
     <rdfs:range rdf:resource="&xsd;string"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:DatatypeProperty>
@@ -208,7 +238,7 @@
   <owl:DatatypeProperty rdf:about="&alt;bluebookIdentifier">
     <rdfs:label>bluebookIdentifier</rdfs:label>
     <rdfs:comment>
-      A citation to a decision in the form described by "A Uniform
+      A citation to a document in the form described by "A Uniform
       System of Citation", a.k.a. the Bluebook, available at
       http://www.legalbluebook.com/
 
@@ -223,7 +253,7 @@
       bluebookIdentifiers, one for each parallel citation.
     </rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
-    <rdfs:domain rdf:resource="&alt;Decision"/>
+    <rdfs:domain rdf:resource="&alt;Document"/>
     <rdfs:range rdf:resource="&xsd;string"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:DatatypeProperty>
@@ -232,16 +262,28 @@
     <rdfs:label>precedential</rdfs:label>
     <rdfs:comment>
       Boolean indicating whether or not a decision is considered
-      "precedential" (or, equivalently, "published") by the court
-      that issued it.
+      "precedential" (or, equivalently, "published") by the court that
+      issued it.
     </rdfs:comment>
-    <rdfs:domain rdf:resource="&alt;Judgment"/>
+    <rdfs:domain rdf:resource="&alt;Decision"/>
     <rdfs:range rdf:resource="&xsd;boolean"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:DatatypeProperty>
 
-  <owl:DatatypeProperty rdf:about="&alt;decided">
-    <rdfs:label>decided</rdfs:label>
+  <owl:DatatypeProperty rdf:about="&alt;fullTitle">
+    <rdfs:label>fullTitle</rdfs:label>
+    <rdfs:comment>
+      The title of a case.  The value of this property should be the
+      full, formal title of the case, e.g. "Oliver Brown et
+      al. v. Board of Education of Topeka et al."  A case should have
+      only one full title.
+    </rdfs:comment>
+    <rdfs:domain rdf:resource="&
+    <rdfs:subPropertyOf rdf:resource="&dcterms;title"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="&alt;decidedOn">
+    <rdfs:label>decidedOn</rdfs:label>
     <rdfs:comment>
       Date that a court decision/ruling/order was decided.  May or may
       not be the same as date of publication ("dcterms:issued").  This
@@ -253,8 +295,19 @@
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:DatatypeProperty>
 
-  <owl:DatatypeProperty rdf:about="&alt;argued">
-    <rdfs:label>argued</rdfs:label>
+  <owl:DatatypeProperty rdf:about="&alt;filedOn">
+    <rdfs:label>filedOn</rdfs:label>
+    <rdfs:comment>
+      Date that a document was filed with a court.
+    </rdfs:comment>
+    <rdfs:subPropertOf rdf:resource="&dcterms;date"/>
+    <rdfs:domain rdf:resource="&alt;Document"/>
+    <rdfs:range rdf:resource="&xsd;date"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="&alt;arguedOn">
+    <rdfs:label>arguedOn</rdfs:label>
     <rdfs:comment>
       Date that a case was argued before a court.  A case may have
       many dates of argument.
@@ -276,27 +329,28 @@
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:ObjectProperty>
 
-  <owl:DatatypeProperty rdf:about="&alt;mimeType">
-    <rdfs:label>mimeType</rdfs:label>
+  <owl:DatatypeProperty rdf:about="&alt;hasMimeType">
+    <rdfs:label>hasMimeType</rdfs:label>
     <rdfs:comment>
-      The MIME type of a File, a literal string such as "application/pdf".
+      The MIME type of a document, a literal string such as
+      "application/pdf".
 
       This property is included to avoid potential confusion over the
       correct usage of "dcterms:format", which has a non-literal
       range.
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="http://www.iana.org/assignments/media-types/"/>
-    <rdfs:domain rdf:resource="&alt;File"/>
+    <rdfs:domain rdf:resource="&bibo;Document"/>
     <rdfs:range rdf:resource="&xsd;string"/>
     <rdfs:subPropertyOf rdf:resource="&dc;format"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:DatatypeProperty>
 
-  <owl:DatatypeProperty rdf:about="&alt;charset">
-    <rdfs:label>charset</rdfs:label>
+  <owl:DatatypeProperty rdf:about="&alt;usesCharset">
+    <rdfs:label>usesCharset</rdfs:label>
     <rdfs:comment>
-      The binary character encoding used by a File.  The value of this
-      property should be a literal string taken from the list at
+      The binary character encoding used by a document.  The value of
+      this property should be a literal string taken from the list at
       iana.org.
 
       When a character set has multiple names, the name given as the
@@ -305,7 +359,7 @@
       "windows-1252", and "UTF-8".
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="http://www.iana.org/assignments/character-sets"/>
-    <rdfs:domain rdf:resource="&alt;File"/>
+    <rdfs:domain rdf:resource="&bibo;Document"/>
     <rdfs:range rdf:resource="&xsd;string"/>
     <rdfs:subPropertyOf rdf:resource="&dc;format"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
@@ -353,8 +407,8 @@
     <rdfs:range rdf:resource="&alt;Download"/>
   </owl:ObjectProperty>
 
-  <owl:DatatypeProperty rdf:about="&alt;url">
-    <rdfs:label>url</rdfs:label>
+  <owl:DatatypeProperty rdf:about="&alt;fromUrl">
+    <rdfs:label>fromUrl</rdfs:label>
     <rdfs:comment>
       The URL from which a Download was retrieved.
     </rdfs:comment>
@@ -413,10 +467,8 @@
   <owl:DatatypeProperty rdf:about="&dcterms;issued">
     <rdfs:label>dcterms:title</rdfs:label>
     <rdfs:comment>
-      The title of a case.  The value of this property should be the
-      full, formal title of the case, e.g. "Oliver Brown et
-      al. v. Board of Education of Topeka et al."  A case should have
-      only one full title.
+      The title of a case.  Use this property when it is not clear if
+      the value represents the full title or a short title.
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="&dcdoc;"/>
     <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
@@ -438,8 +490,8 @@
   <owl:ObjectProperty rdf:about="&dcterms;hasFormat">
     <rdfs:label>dcterms:hasFormat</rdfs:label>
     <rdfs:comment>
-      Link from an abstract entity, such as a Decision, to its
-      concrete representation, such as a File.
+      Link to another resource containing the same document in a
+      different format.  The target should have an "alt:mimeType".
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="&dcdoc;"/>
     <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
