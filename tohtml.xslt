@@ -61,7 +61,6 @@
         </span>
       </xsl:otherwise>
     </xsl:choose>
-    
   </xsl:template>
 
   <xsl:template name="paragraphs">
@@ -79,39 +78,39 @@
         <link rel="stylesheet" href="styles.css"/>
       </head>
       <body>
-        <xsl:apply-templates select="//owl:Ontology"/>
+        <xsl:apply-templates select="//owl:Ontology/(rdfs:label|rdfs:comment)" mode="documentHead"/>
         <div class="quicklinks" id="glance">
           <h2>Terms at a Glance</h2>
           <p>
             <xsl:text>Classes: </xsl:text>
-            <xsl:for-each select="//rdfs:Class[rdfs:isDefinedBy/@rdf:resource = $thisOntology]">
+            <xsl:for-each select="//owl:Class[rdfs:isDefinedBy/@rdf:resource = $thisOntology]">
               <xsl:call-template name="term-link"/>
             </xsl:for-each>
           </p>
           <p>
             <xsl:text>Properties: </xsl:text>
-            <xsl:for-each select="//rdfs:Property[rdfs:isDefinedBy/@rdf:resource = $thisOntology]">
+            <xsl:for-each select="//(owl:DatatypeProperty|owl:ObjectProperty)[rdfs:isDefinedBy/@rdf:resource = $thisOntology]">
               <xsl:call-template name="term-link"/>
             </xsl:for-each>
           </p>
           <p>
             <xsl:text>Terms from other vocabularies: </xsl:text>
-            <xsl:for-each select="//(rdfs:Property | rdfs:Class)[rdfs:isDefinedBy/@rdf:resource != $thisOntology]">
+            <xsl:for-each select="//(owl:DatatypeProperty|owl:ObjectProperty | owl:Class)[rdfs:isDefinedBy/@rdf:resource != $thisOntology]">
               <xsl:call-template name="term-link"/>
             </xsl:for-each>
           </p>
         </div>
         <div class="rdfclasses">
           <h2>Classes defined in this vocabulary</h2>
-          <xsl:apply-templates select="//rdfs:Class[rdfs:isDefinedBy/@rdf:resource = $thisOntology]"/>
+          <xsl:apply-templates select="//owl:Class[rdfs:isDefinedBy/@rdf:resource = $thisOntology]"/>
         </div>
         <div class="rdfproperties">
           <h2>Properties defined in this vocabulary</h2>
-          <xsl:apply-templates select="//rdfs:Property[rdfs:isDefinedBy/@rdf:resource = $thisOntology]"/>
+          <xsl:apply-templates select="//(owl:DatatypeProperty|owl:ObjectProperty)[rdfs:isDefinedBy/@rdf:resource = $thisOntology]"/>
         </div>
         <div class="rdfborrowed">
           <h2>Terms borrowed from other vocabularies</h2>
-          <xsl:apply-templates select="//(rdfs:Property | rdfs:Class)[rdfs:isDefinedBy/@rdf:resource != $thisOntology]"/>
+          <xsl:apply-templates select="//(owl:DatatypeProperty|owl:ObjectProperty | owl:Class)[rdfs:isDefinedBy/@rdf:resource != $thisOntology]"/>
         </div>
       </body>
     </html>
@@ -121,7 +120,7 @@
     <xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="dcterms:title">
+  <xsl:template match="rdfs:label" mode="documentHead">
     <h1>
       <xsl:apply-templates/>
     </h1>
@@ -131,7 +130,7 @@
     </h2>
   </xsl:template>
 
-  <xsl:template match="dcterms:description">
+  <xsl:template match="rdfs:comment" mode="documentHead">
     <div class="description">
       <xsl:call-template name="paragraphs"/>
     </div>
@@ -144,7 +143,7 @@
     </dd>
   </xsl:template>
 
-  <xsl:template match="rdfs:Class">
+  <xsl:template match="owl:Class">
     <div class="rdfclass">
       <xsl:attribute name="id">
         <xsl:text>term-</xsl:text>
@@ -162,18 +161,18 @@
         <xsl:variable name="myurl">
           <xsl:value-of select="@rdf:about"/>
         </xsl:variable>
-        <xsl:if test="//rdfs:Property[rdfs:domain/@rdf:resource = $myurl]">
+        <xsl:if test="//(owl:DatatypeProperty|owl:ObjectProperty)[rdfs:domain/@rdf:resource = $myurl]">
           <dt>In domain of: </dt>
           <dd>
-            <xsl:for-each select="//rdfs:Property[rdfs:domain/@rdf:resource = $myurl]">
+            <xsl:for-each select="//(owl:DatatypeProperty|owl:ObjectProperty)[rdfs:domain/@rdf:resource = $myurl or rdfs:domain/owl:Class/owl:unionOf/owl:Class/@rdf:about = $myurl]">
               <xsl:call-template name="term-link"/>
             </xsl:for-each>
           </dd>
         </xsl:if>
-        <xsl:if test="//rdfs:Property[rdfs:range/@rdf:resource = $myurl]">
+        <xsl:if test="//(owl:DatatypeProperty|owl:ObjectProperty)[rdfs:range/@rdf:resource = $myurl]">
           <dt>In range of: </dt>
           <dd>
-            <xsl:for-each select="//rdfs:Property[rdfs:range/@rdf:resource = $myurl]">
+            <xsl:for-each select="//(owl:DatatypeProperty|owl:ObjectProperty)[rdfs:range/@rdf:resource = $myurl]">
               <xsl:call-template name="term-link"/>
             </xsl:for-each>
           </dd>
@@ -183,7 +182,7 @@
     </div>
   </xsl:template>
   
-  <xsl:template match="rdfs:Property">
+  <xsl:template match="owl:DatatypeProperty|owl:ObjectProperty">
     <div class="rdfproperty">
       <xsl:attribute name="id">
         <xsl:text>term-</xsl:text>
@@ -234,7 +233,45 @@
   <xsl:template match="rdfs:domain">
     <dt>Domain: </dt>
     <dd>
-      <xsl:call-template name="url-term-link"/>
+      <xsl:choose>
+        <xsl:when test="@rdf:resource">
+          <div>
+            <xsl:call-template name="url-term-link"/>
+          </div>
+        </xsl:when>
+        <xsl:when test="owl:Class/owl:unionOf">
+          <xsl:for-each select="owl:Class/owl:unionOf/owl:Class">
+            <div>
+              <xsl:choose>
+                <xsl:when test="fn:starts-with(@rdf:about, $thisOntology)">
+                  <span>
+                    <a>
+                      <xsl:variable name="termname">
+                        <xsl:value-of select="fn:replace(@rdf:about,$thisOntology,'')"/>
+                      </xsl:variable>
+                      <xsl:attribute name="href">
+                        <xsl:text>#term-</xsl:text>
+                        <xsl:value-of select="$termname"/>
+                      </xsl:attribute>
+                      <xsl:value-of select="$termname"/>
+                    </a>
+                  </span>
+                </xsl:when>
+                <xsl:otherwise>
+                  <span>
+                    <a>
+                      <xsl:attribute name="href">
+                        <xsl:value-of select="@rdf:about"/>
+                      </xsl:attribute>
+                      <xsl:value-of select="@rdf:about"/>
+                    </a>
+                  </span>
+                </xsl:otherwise>
+              </xsl:choose>
+            </div>
+          </xsl:for-each>
+        </xsl:when>
+      </xsl:choose>
     </dd>
   </xsl:template>
   
