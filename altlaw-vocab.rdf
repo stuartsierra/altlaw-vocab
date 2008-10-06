@@ -54,6 +54,25 @@
 
   <!-- CLASSES -->
 
+  <owl:Class rdf:about="&alt;LegalProceeding">
+    <rdfs:label>LegalProceeding</rdfs:label>
+    <rdfs:comment>
+      Abstract base class for any document, action, or event
+      situatuated within the judicial system.
+    </rdfs:comment>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:Class>
+
+  <owl:Class rdf:about="&alt;Case">
+    <rdfs:label>Case</rdfs:label>
+    <rdfs:comment>
+      A single dispute among two or more parties.  It may be argued in
+      multiple courts at different times through the appeals process.
+    </rdfs:comment>
+    <rdfs:subClassOf rdf:resource="&alt;LegalProceeding"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:Class>
+
   <owl:Class rdf:about="&alt;Court">
     <rdfs:label>Court</rdfs:label>
     <rdfs:comment>
@@ -64,37 +83,16 @@
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
-  <owl:Class rdf:about="&alt;Case">
-    <rdfs:label>Case</rdfs:label>
-    <rdfs:comment>
-      A single dispute among two or more parties.  It may be argued in
-      multiple Courts at different times, and may result in multiple
-      Judgments.
-    </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:Class>
-
-  <owl:Class rdf:about="&alt;Proceeding">
-    <rdfs:label>Proceeding</rdfs:label>
-    <rdfs:comment>
-      The consideration of some matter by a Court, usually resulting
-      in a Judgment.
-
-      A Proceeding is an abstract concept, independent of the actual
-      hearings at which the case is argued.
-    </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:Class>
-
   <owl:Class rdf:about="&alt;Judgment">
     <rdfs:label>Judgment</rdfs:label>
     <rdfs:comment>
       A determination by a Court on matters put before it.
 
-      A Judgment is an abstract concept, which takes its written form
-      in a Decision.  However, Judgments may exist that have no
-      written Decisions.  A Judgment may dispose of multiple Cases.
+      A Judgment is an abstract concept, which, when written down,
+      becomes a Decision.  However, not all court judgments are
+      written down.
     </rdfs:comment>
+    <rdfs:subClassOf rdf:resource="&alt;LegalProceeding"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
@@ -119,6 +117,7 @@
       of one judge or an agreement among judges, such as a majority
       opinion, concurrence, or dissent.
     </rdfs:comment>
+    <rdfs:subClassOf rdf:resource="&alt;LegalProceeding"/>
     <rdfs:subClassOf rdf:resource="&bibo;LegalCaseDocument"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
@@ -131,6 +130,7 @@
       machine-readable form such as a diff, but courts do not publish
       that way.
     </rdfs:comment>
+    <rdfs:subClassOf rdf:resource="&alt;LegalProceeding"/>
     <rdfs:subClassOf rdf:resource="&bibo;Document"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
@@ -138,7 +138,7 @@
   <owl:Class rdf:about="&alt;Process">
     <rdfs:label>Process</rdfs:label>
     <rdfs:comment>
-      A single execution of an automated operation.
+      A single execution of an automated operation, as in a computer.
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
@@ -169,39 +169,20 @@
   <owl:ObjectProperty rdf:about="&alt;inCourt">
     <rdfs:label>inCourt</rdfs:label>
     <rdfs:comment>
-      The court in which a Document was filed, a Judgment was given,
-      or a Proceeding was considered.
+      The court in which an event took place, a decision was made, or
+      a document was filed.
     </rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="&dcterms;coverage"/>
-    <rdfs:domain>
-      <owl:Class>
-        <owl:unionOf rdf:parseType="Collection">
-          <owl:Class rdf:about="&alt;Judgment"/>
-          <owl:Class rdf:about="&alt;Proceeding"/>
-          <owl:Class rdf:about="&bibo;Document"/>
-        </owl:unionOf>
-      </owl:Class>
-    </rdfs:domain>
+    <rdfs:domain rdf:resource="&alt;LegalProceeding"/>
     <rdfs:range rdf:resource="&alt;Court"/>
     <owl:equivalentProperty rdf:resource="&bibo;court"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:ObjectProperty>
-  
-  <owl:ObjectProperty rdf:about="&alt;consideredIn">
-    <rdfs:label>consideredIn</rdfs:label>
-    <rdfs:comment>
-      Links a Case to a Proceeding in a particular Court.
-    </rdfs:comment>
-    <rdfs:domain rdf:resource="&alt;Case"/>
-    <rdfs:range rdf:resource="&alt;Proceeding"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:ObjectProperty>
   
   <owl:DatatypeProperty rdf:about="&alt;docketNumber">
     <rdfs:label>docketNumber</rdfs:label>
     <rdfs:comment>
-      The court-assigned docket number associated with a Document or
-      Proceeding.
+      The court-assigned docket number for a case.
 
       A single case may have multiple docket numbers attached to it.
       The range of this property is any string, which may include
@@ -211,15 +192,7 @@
       as "No." or "Nos.".
     </rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
-    <rdfs:domain>
-      <owl:Class>
-        <owl:unionOf rdf:parseType="Collection">
-          <owl:Class rdf:about="&bibo;Document"/>
-          <owl:Class rdf:about="&alt;Judgment"/>
-          <owl:Class rdf:about="&alt;Proceeding"/>
-        </owl:unionOf>
-      </owl:Class>
-    </rdfs:domain>
+    <rdfs:domain rdf:resource="&alt;LegalProceeding"/>
     <rdfs:range rdf:resource="&xsd;string"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:DatatypeProperty>
@@ -230,7 +203,7 @@
       The court-assigned document number within a docket.
     </rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
-    <rdfs:domain rdf:resource="&bibo;Document"/>
+    <rdfs:domain rdf:resource="&bibo;LegalCaseDocument"/>
     <rdfs:range rdf:resource="&xsd;string"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:DatatypeProperty>
@@ -253,7 +226,7 @@
       bluebookIdentifiers, one for each parallel citation.
     </rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
-    <rdfs:domain rdf:resource="&alt;Document"/>
+    <rdfs:domain rdf:resource="&bibo;LegalCaseDocument"/>
     <rdfs:range rdf:resource="&xsd;string"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:DatatypeProperty>
@@ -278,7 +251,9 @@
       al. v. Board of Education of Topeka et al."  A case should have
       only one full title.
     </rdfs:comment>
+    <rdfs:domain rdf:resource="&alt;LegalProceeding"/>
     <rdfs:subPropertyOf rdf:resource="&dcterms;title"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:DatatypeProperty>
 
   <owl:DatatypeProperty rdf:about="&alt;decidedOn">
@@ -289,7 +264,7 @@
       is the preferred date to use when describing a court decision.
     </rdfs:comment>
     <rdfs:subPropertOf rdf:resource="&dcterms;date"/>
-    <rdfs:domain rdf:resource="&alt;Judgment"/>
+    <rdfs:domain rdf:resource="&alt;LegalProceeding"/>
     <rdfs:range rdf:resource="&xsd;date"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:DatatypeProperty>
@@ -300,7 +275,7 @@
       Date that a document was filed with a court.
     </rdfs:comment>
     <rdfs:subPropertOf rdf:resource="&dcterms;date"/>
-    <rdfs:domain rdf:resource="&alt;Document"/>
+    <rdfs:domain rdf:resource="&alt;LegalCaseDocument"/>
     <rdfs:range rdf:resource="&xsd;date"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:DatatypeProperty>
@@ -312,6 +287,7 @@
       many dates of argument.
     </rdfs:comment>
     <rdfs:subPropertOf rdf:resource="&dcterms;date"/>
+    <rdfs:domain rdf:resource="&alt;LegalProceeding"/>
     <rdfs:range rdf:resource="&xsd;date"/>
     <owl:equivalentProperty rdf:resource="&bibo;argued"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
@@ -416,8 +392,8 @@
     <rdfs:range rdf:resource="&xsd;string"/>
   </owl:DatatypeProperty>
 
-  <owl:DatatypeProperty rdf:about="&alt;httpRequest">
-    <rdfs:label>httpRequest</rdfs:label>
+  <owl:DatatypeProperty rdf:about="&alt;sentHttpRequest">
+    <rdfs:label>sentHttpRequest</rdfs:label>
     <rdfs:comment>
       A complete log of the HTTP request sent to a remote server,
       containing both HTTP headers and entity body.
@@ -427,8 +403,8 @@
     <rdfs:range rdf:resource="&xsd;string"/>
   </owl:DatatypeProperty>
 
-  <owl:DatatypeProperty rdf:about="&alt;httpResponse">
-    <rdfs:label>httpResponse</rdfs:label>
+  <owl:DatatypeProperty rdf:about="&alt;gotHttpResponse">
+    <rdfs:label>gotHttpResponse</rdfs:label>
     <rdfs:comment>
       A complete log of the HTTP response received from a remote
       server, containing both HTTP headers and entity body.
@@ -437,6 +413,7 @@
     <rdfs:domain rdf:resource="&alt;Download"/>
     <rdfs:range rdf:resource="&xsd;string"/>
   </owl:DatatypeProperty>
+
 
   <!-- PROPERTIES DEFINED IN OTHER ONTOLOGIES -->
 
