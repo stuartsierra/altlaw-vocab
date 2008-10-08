@@ -54,25 +54,6 @@
 
   <!-- CLASSES -->
 
-  <owl:Class rdf:about="&alt;LegalProceeding">
-    <rdfs:label>LegalProceeding</rdfs:label>
-    <rdfs:comment>
-      Abstract base class for any document, action, or event
-      situatuated within the judicial system.
-    </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:Class>
-
-  <owl:Class rdf:about="&alt;Case">
-    <rdfs:label>Case</rdfs:label>
-    <rdfs:comment>
-      A single dispute among two or more parties.  It may be argued in
-      multiple courts at different times through the appeals process.
-    </rdfs:comment>
-    <rdfs:subClassOf rdf:resource="&alt;LegalProceeding"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:Class>
-
   <owl:Class rdf:about="&alt;Court">
     <rdfs:label>Court</rdfs:label>
     <rdfs:comment>
@@ -92,7 +73,6 @@
       becomes a Decision.  However, not all court judgments are
       written down.
     </rdfs:comment>
-    <rdfs:subClassOf rdf:resource="&alt;LegalProceeding"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
@@ -106,7 +86,12 @@
     <owl:equivalentClass rdf:resource="&bibo;LegalDecision"/>
     <rdfs:subClassOf rdf:resource="&bibo;LegalCaseDocument"/>
     <rdfs:subClassOf rdf:resource="&alt;Judgment"/>
-    <rdfs:seeAlso rdf:resource="http://bibliontology.com/"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="&alt;Opinion"/>
+        <owl:onProperty rdf:resource="&dcterms;hasPart"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
@@ -117,8 +102,13 @@
       of one judge or an agreement among judges, such as a majority
       opinion, concurrence, or dissent.
     </rdfs:comment>
-    <rdfs:subClassOf rdf:resource="&alt;LegalProceeding"/>
     <rdfs:subClassOf rdf:resource="&bibo;LegalCaseDocument"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:allValuesFrom rdf:resource="&alt;Decision"/>
+        <owl:onProperty rdf:resource="&dcterms;isPartOf"/>
+      </owl:Restriction>
+    </rdfs:subClassOf>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
@@ -130,7 +120,6 @@
       machine-readable form such as a diff, but courts do not publish
       that way.
     </rdfs:comment>
-    <rdfs:subClassOf rdf:resource="&alt;LegalProceeding"/>
     <rdfs:subClassOf rdf:resource="&bibo;Document"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
@@ -166,14 +155,13 @@
 
   <!-- PROPERTIES -->
 
-  <owl:ObjectProperty rdf:about="&alt;inCourt">
-    <rdfs:label>inCourt</rdfs:label>
+  <owl:ObjectProperty rdf:about="&alt;court">
+    <rdfs:label>court</rdfs:label>
     <rdfs:comment>
-      The court in which an event took place, a decision was made, or
-      a document was filed.
+      The court associated with a document or event.
     </rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="&dcterms;coverage"/>
-    <rdfs:domain rdf:resource="&alt;LegalProceeding"/>
+    <rdfs:domain rdf:resource="&rdf;Resource"/>
     <rdfs:range rdf:resource="&alt;Court"/>
     <owl:equivalentProperty rdf:resource="&bibo;court"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
