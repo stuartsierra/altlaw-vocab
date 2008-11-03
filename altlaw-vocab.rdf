@@ -112,6 +112,42 @@
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
+  <owl:Class rdf:about="&alt;BluebookCitation">
+    <rdfs:label>BluebookCitation</rdfs:label>
+    <rdfs:comment>
+      A citation to a document in the form described by "A Uniform
+      System of Citation", a.k.a. the Bluebook, available at
+      http://www.legalbluebook.com/
+
+      A BluebookCitation is typically composed of a title, one or more
+      BluebookLocators, and a year and court in parentheses. Instances
+      of this class should have, at a minimum, an rdf:value property
+      pointing to the full citation as a string.
+
+      Individual components may be represented by the properties
+      dcterms:title, dcterms:date, and alt:court.
+      Volume/reporter/page locators may be represented with the
+      property dcterms:hasPart pointing to instances of
+      BluebookLocator.
+    </rdfs:comment>
+  </owl:Class>
+
+  <owl:Class rdf:about="&alt;BluebookLocator">
+    <rdfs:label>BluebookLocator</rdfs:label>
+    <rdfs:comment>
+      A Bluebook locator has three parts, as in "[volume] [reporter]
+      [page]", with an optional "pincite" giving the page at which a
+      particular reference is found.  Instances of this class should
+      have, at a minimum, an rdf:value property pointing to the
+      locator as a string.  Individual components may be represented
+      by the properties bibo:volume, bibo:startPage, and
+      dcterms:isPartOf pointing to an instance of bibo:CourtReporter
+      or some other collection class.  Pincites may be represented
+      with the alt:atPage or alt:atParagraph properties.
+    </rdfs:comment>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:Class>
+
   <owl:Class rdf:about="&alt;Errata">
     <rdfs:label>Errata</rdfs:label>
     <rdfs:comment>
@@ -167,51 +203,10 @@
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:ObjectProperty>
   
-  <owl:DatatypeProperty rdf:about="&alt;docketNumber">
-    <rdfs:label>docketNumber</rdfs:label>
-    <rdfs:comment>
-      The court-assigned docket number for a case.
-
-      A single case may have multiple docket numbers attached to it.
-      The range of this property is any string, which may include
-      punctuation such as hyphens, but it should be a single docket
-      number rather than a series such as "10-102; 10-103".  The
-      string also should not contain abbreviations for "Number" such
-      as "No." or "Nos.".
-    </rdfs:comment>
-    <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
-    <rdfs:domain rdf:resource="&alt;LegalProceeding"/>
-    <rdfs:range rdf:resource="&xsd;string"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:DatatypeProperty>
-
   <owl:DatatypeProperty rdf:about="&alt;documentNumber">
     <rdfs:label>documentNumber</rdfs:label>
     <rdfs:comment>
       The court-assigned document number within a docket.
-    </rdfs:comment>
-    <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
-    <rdfs:domain rdf:resource="&bibo;LegalCaseDocument"/>
-    <rdfs:range rdf:resource="&xsd;string"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:DatatypeProperty>
-
-  <owl:DatatypeProperty rdf:about="&alt;bluebookIdentifier">
-    <rdfs:label>bluebookIdentifier</rdfs:label>
-    <rdfs:comment>
-      A citation to a document in the form described by "A Uniform
-      System of Citation", a.k.a. the Bluebook, available at
-      http://www.legalbluebook.com/
-
-      Values of this property should use the three-part syntax
-      "[volume] [reporter] [page]".  Additional information such as
-      title, date, court, and pinpoint citations ("pincites") should
-      be omitted.  Section numbers may be used instead of pages, as in
-      "17 U.S.C. &#167; 705".
-
-      A single value of this property must not include parallel
-      citations, but a single decision may have multiple
-      bluebookIdentifiers, one for each parallel citation.
     </rdfs:comment>
     <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
     <rdfs:domain rdf:resource="&bibo;LegalCaseDocument"/>
@@ -234,162 +229,23 @@
   <owl:DatatypeProperty rdf:about="&alt;fullTitle">
     <rdfs:label>fullTitle</rdfs:label>
     <rdfs:comment>
-      The title of a case.  The value of this property should be the
-      full, formal title of the case, e.g. "Oliver Brown et
+      The full, formal title of the case, e.g. "Oliver Brown et
       al. v. Board of Education of Topeka et al."  A case should have
       only one full title.
     </rdfs:comment>
-    <rdfs:domain rdf:resource="&alt;LegalProceeding"/>
+    <rdfs:domain rdf:resource="&bibo;LegalCaseDocument"/>
     <rdfs:subPropertyOf rdf:resource="&dcterms;title"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:DatatypeProperty>
 
-  <owl:DatatypeProperty rdf:about="&alt;decidedOn">
-    <rdfs:label>decidedOn</rdfs:label>
+  <owl:DatatypeProperty rdf:about="&alt;shortTitle">
+    <rdfs:label>shortTitle</rdfs:label>
     <rdfs:comment>
-      Date that a court decision/ruling/order was decided.  May or may
-      not be the same as date of publication ("dcterms:issued").  This
-      is the preferred date to use when describing a court decision.
+      A shortened title of a case, as commonly used when citing or
+      discussing the case, e.g. "Brown v. Board of Education" or just
+      "Brown".  A case may have multiple short titles.
     </rdfs:comment>
-    <rdfs:subPropertOf rdf:resource="&dcterms;date"/>
-    <rdfs:domain rdf:resource="&alt;LegalProceeding"/>
-    <rdfs:range rdf:resource="&xsd;date"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:DatatypeProperty>
-
-  <owl:DatatypeProperty rdf:about="&alt;filedOn">
-    <rdfs:label>filedOn</rdfs:label>
-    <rdfs:comment>
-      Date that a document was filed with a court.
-    </rdfs:comment>
-    <rdfs:subPropertOf rdf:resource="&dcterms;date"/>
-    <rdfs:domain rdf:resource="&alt;LegalCaseDocument"/>
-    <rdfs:range rdf:resource="&xsd;date"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:DatatypeProperty>
-
-  <owl:DatatypeProperty rdf:about="&alt;arguedOn">
-    <rdfs:label>arguedOn</rdfs:label>
-    <rdfs:comment>
-      Date that a case was argued before a court.  A case may have
-      many dates of argument.
-    </rdfs:comment>
-    <rdfs:subPropertOf rdf:resource="&dcterms;date"/>
-    <rdfs:domain rdf:resource="&alt;LegalProceeding"/>
-    <rdfs:range rdf:resource="&xsd;date"/>
-    <owl:equivalentProperty rdf:resource="&bibo;argued"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:DatatypeProperty>
-
-  <owl:ObjectProperty rdf:about="&alt;amends">
-    <rdfs:label>amends</rdfs:label>
-    <rdfs:comment>
-      Link between an Errata document and the Document it
-      modifies/corrects.
-    </rdfs:comment>
-    <rdfs:domain rdf:resource="&alt;Errata"/>
-    <rdfs:range rdf:resource="&bibo;Document"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:ObjectProperty>
-
-  <owl:DatatypeProperty rdf:about="&alt;hasMimeType">
-    <rdfs:label>hasMimeType</rdfs:label>
-    <rdfs:comment>
-      The MIME type of a document, a literal string such as
-      "application/pdf".
-
-      This property is included to avoid potential confusion over the
-      correct usage of "dcterms:format", which has a non-literal
-      range.
-    </rdfs:comment>
-    <rdfs:seeAlso rdf:resource="http://www.iana.org/assignments/media-types/"/>
-    <rdfs:domain rdf:resource="&bibo;Document"/>
-    <rdfs:range rdf:resource="&xsd;string"/>
-    <rdfs:subPropertyOf rdf:resource="&dc;format"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:DatatypeProperty>
-
-  <owl:DatatypeProperty rdf:about="&alt;usesCharset">
-    <rdfs:label>usesCharset</rdfs:label>
-    <rdfs:comment>
-      The binary character encoding used by a document.  The value of
-      this property should be a literal string taken from the list at
-      iana.org.
-
-      When a character set has multiple names, the name given as the
-      "preferred MIME name" by iana.org should be used.  Preferred
-      names for common character sets are "US-ASCII", "ISO-8859-1",
-      "windows-1252", and "UTF-8".
-    </rdfs:comment>
-    <rdfs:seeAlso rdf:resource="http://www.iana.org/assignments/character-sets"/>
-    <rdfs:domain rdf:resource="&bibo;Document"/>
-    <rdfs:range rdf:resource="&xsd;string"/>
-    <rdfs:subPropertyOf rdf:resource="&dc;format"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:DatatypeProperty>
-
-  <owl:DatatypeProperty rdf:about="&alt;started">
-    <rdfs:label>started</rdfs:label>
-    <rdfs:comment>
-      Timestamp when a process began.
-    </rdfs:comment>
-    <rdfs:subPropertyOf rdf:resource="&dcterms;created"/>
-    <rdfs:domain rdf:resource="&alt;Process"/>
-    <rdfs:range rdf:resource="&xsd;dateTime"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:DatatypeProperty>
-
-  <owl:DatatypeProperty rdf:about="&alt;finished">
-    <rdfs:label>finished</rdfs:label>
-    <rdfs:comment>
-      Timestamp when a process was completed.
-    </rdfs:comment>
-    <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
-    <rdfs:domain rdf:resource="&alt;Process"/>
-    <rdfs:range rdf:resource="&xsd;dateTime"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:DatatypeProperty>
-
-  <owl:DatatypeProperty rdf:about="&alt;discovered">
-    <rdfs:label>discovered</rdfs:label>
-    <rdfs:comment>
-      The "discovered" property links a Crawl to the entities that it
-      finds.
-    </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-    <rdfs:domain rdf:resource="&alt;Crawl"/>
-  </owl:DatatypeProperty>
-
-  <owl:ObjectProperty rdf:about="&alt;downloaded">
-    <rdfs:label>downloaded</rdfs:label>
-    <rdfs:comment>
-      A single Download performed during a Crawl.
-    </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-    <rdfs:domain rdf:resource="&alt;Crawl"/>
-    <rdfs:range rdf:resource="&alt;Download"/>
-  </owl:ObjectProperty>
-
-  <owl:DatatypeProperty rdf:about="&alt;fromUrl">
-    <rdfs:label>fromUrl</rdfs:label>
-    <rdfs:comment>
-      The URL from which a Download was retrieved.
-    </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-    <rdfs:domain rdf:resource="&alt;Download"/>
-    <rdfs:range rdf:resource="&xsd;string"/>
-  </owl:DatatypeProperty>
-
-  <owl:DatatypeProperty rdf:about="&alt;sentHttpRequest">
-    <rdfs:label>sentHttpRequest</rdfs:label>
-    <rdfs:comment>
-      A complete log of the HTTP request sent to a remote server,
-      containing both HTTP headers and entity body.
-    </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-    <rdfs:domain rdf:resource="&alt;Download"/>
-    <rdfs:range rdf:resource="&xsd;string"/>
-  </owl:DatatypeProperty>
+    <rdfs:domain rdf:resource="&bibo;LegalCaseDocument"/>
 
   <owl:DatatypeProperty rdf:about="&alt;gotHttpResponse">
     <rdfs:label>gotHttpResponse</rdfs:label>
@@ -439,23 +295,12 @@
     <rdfs:subPropertyOf rdf:resource="&dc;title"/>
   </owl:DatatypeProperty>
 
-  <owl:DatatypeProperty rdf:about="&bibo;shortTitle">
-    <rdfs:label>bibo:shortTitle</rdfs:label>
-    <rdfs:comment>
-      A shortened title of a case, as commonly used when citing or
-      discussing the case, e.g. "Brown v. Board of Education" or just
-      "Brown".  A case may have multiple short titles.
-    </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="&bibo;"/>
-    <rdfs:seeAlso rdf:resource="http://bibliontology.com/"/>
-    <rdfs:subPropertyOf rdf:resource="&dcterms;alternative"/>
-  </owl:DatatypeProperty>
-
   <owl:ObjectProperty rdf:about="&dcterms;hasFormat">
     <rdfs:label>dcterms:hasFormat</rdfs:label>
     <rdfs:comment>
       Link to another resource containing the same document in a
-      different format.  The target should have an "alt:mimeType".
+      different format.  The target should have a dcterms:format
+      property giving its MIME type.
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="&dcdoc;"/>
     <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
