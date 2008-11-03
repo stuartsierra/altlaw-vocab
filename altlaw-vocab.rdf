@@ -12,6 +12,7 @@
     <!ENTITY vann "http://purl.org/vocab/vann/">
     <!ENTITY dcdoc "http://dublincore.org/documents/dcmi-terms/">
     <!ENTITY nfo "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#">
+    <!ENTITY nie "http://www.semanticdesktop.org/ontologies/2007/01/19/nie#">
 ]>
 <rdf:RDF 
     xmlns:alt="&alt;"
@@ -247,7 +248,7 @@
     <rdfs:label>dcterms:hasFormat</rdfs:label>
     <rdfs:comment>
       Link to another resource containing the same document in a
-      different format.  The target will have an nfo:mimeType
+      different format.  The target will have an nie:mimeType
       property giving its MIME type.
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="&dcdoc;"/>
@@ -255,13 +256,13 @@
     <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
   </owl:ObjectProperty>
 
-  <owl:ObjectProperty rdf:about="&nfo;mimeType">
-    <rdfs:label>nfo:mimeType</rdfs:label>
+  <owl:ObjectProperty rdf:about="&nie;mimeType">
+    <rdfs:label>nie:mimeType</rdfs:label>
     <rdfs:comment>
       The MIME type of a resource, from the list published by the
       IANA.
     </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="&nfo;"/>
+    <rdfs:isDefinedBy rdf:resource="&nie;"/>
   </owl:ObjectProperty>
 
 
