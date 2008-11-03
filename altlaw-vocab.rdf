@@ -11,6 +11,7 @@
     <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#">
     <!ENTITY vann "http://purl.org/vocab/vann/">
     <!ENTITY dcdoc "http://dublincore.org/documents/dcmi-terms/">
+    <!ENTITY nfo "http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#">
 ]>
 <rdf:RDF 
     xmlns:alt="&alt;"
@@ -18,6 +19,7 @@
     xmlns:dcterms="&dcterms;"
     xmlns:foaf="&foaf;"
     xmlns:owl="&owl;"
+    xmlns:nfo="&nfo;"
     xmlns:rdf="&rdf;"
     xmlns:rdfs="&rdfs;"
     xmlns:xsd="&xsd;"
@@ -31,31 +33,26 @@
     <vann:preferredNamespacePrefix>alt</vann:preferredNamespacePrefix>
     <rdfs:comment>
       An RDF vocabulary for Semantic Web applications using data
-      provided by AltLaw.org.  The classes and properties defined here
-      are intended to supplement and be used alongside other metadata
-      vocabularies such as Dublin Core (&dcterms;) and
-      Bibliontology (&bibo;).
-
-      This vocabulary borrows some definitions from the OAI4Courts draft
-      specification at
-      http://topics.law.cornell.edu/wiki/lexcraft/oai4courts_overview
-
-      This vocabulary redefines some terms that exist in other
-      ontologies but are considered "unstable"
-      (e.g. "bibo:LegalDecision").
+      provided by AltLaw.org.  Many classes and properties here are
+      borrowed directly from Bibliontology, Dublin Core, and the draft
+      OAI4Courts specification, with comments indicating how they are
+      used by AltLaw.
 
       THIS VOCABULARY IS EXPERIMENTAL AND SUBJECT TO MAJOR CHANGES.
 
       The RDF/XML source of this vocabulary can be found at
-      http://github.com/lawcommons/altlaw-vocab/tree/master/altlaw-vocab.rdf
+      http://github.com/lawcommons/altlaw-vocab
     </rdfs:comment>
+    <rdfs:seeAlso rdf:resource="&bibo;"/>
+    <rdfs:seeAlso rdf:resource="&dcterms;"/>
+    <rdfs:seeAlso rdf:resource="http://topics.law.cornell.edu/wiki/lexcraft/oai4courts_overview"/>
   </owl:Ontology>
 
 
   <!-- CLASSES -->
 
   <owl:Class rdf:about="&alt;Court">
-    <rdfs:label>Court</rdfs:label>
+    <rdfs:label>alt:Court</rdfs:label>
     <rdfs:comment>
       Any court.
     </rdfs:comment>
@@ -65,42 +62,32 @@
   </owl:Class>
 
   <owl:Class rdf:about="&alt;Judgment">
-    <rdfs:label>Judgment</rdfs:label>
+    <rdfs:label>alt:Judgment</rdfs:label>
     <rdfs:comment>
       A determination by a Court on matters put before it.
 
-      A Judgment is an abstract concept, which, when written down,
-      becomes a Decision.  However, not all court judgments are
+      A Judgment is an abstract concept, the written form of which is
+      a bibo:LegalDecision.  However, not all court judgments are
       written down.
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
-  <owl:Class rdf:about="&alt;Decision">
-    <rdfs:label>Decision</rdfs:label>
+  <owl:Class rdf:abouc="&bibo;LegalDecision">
+    <rdfs:label>bibo:LegalDecision</rdfs:label>
     <rdfs:comment>
-      The written form of a Judgment.  A decision may be a complete
-      document in and of itself, or it contain multiple Opinions with
-      "dcterms:hasPart".
+      A written document containing the authoratitive judgment of a
+      court.
     </rdfs:comment>
-    <owl:equivalentClass rdf:resource="&bibo;LegalDecision"/>
-    <rdfs:subClassOf rdf:resource="&bibo;LegalCaseDocument"/>
-    <rdfs:subClassOf rdf:resource="&alt;Judgment"/>
-    <rdfs:subClassOf>
-      <owl:Restriction>
-        <owl:allValuesFrom rdf:resource="&alt;Opinion"/>
-        <owl:onProperty rdf:resource="&dcterms;hasPart"/>
-      </owl:Restriction>
-    </rdfs:subClassOf>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+    <rdfs:isDefinedBy rdf:resource="&bibo;"/>
   </owl:Class>
 
   <owl:Class rdf:about="&alt;Opinion">
-    <rdfs:label>Opinion</rdfs:label>
+    <rdfs:label>alt:Opinion</rdfs:label>
     <rdfs:comment>
-      A single written screed within a Decision.  Represents the view
-      of one judge or an agreement among judges, such as a majority
-      opinion, concurrence, or dissent.
+      A single written screed within a bibo:LegalDecision.  Represents
+      the view of one judge or an agreement among judges, such as a
+      majority opinion, concurrence, or dissent.
     </rdfs:comment>
     <rdfs:subClassOf rdf:resource="&bibo;LegalCaseDocument"/>
     <rdfs:subClassOf>
@@ -113,7 +100,7 @@
   </owl:Class>
 
   <owl:Class rdf:about="&alt;BluebookCitation">
-    <rdfs:label>BluebookCitation</rdfs:label>
+    <rdfs:label>alt:BluebookCitation</rdfs:label>
     <rdfs:comment>
       A citation to a document in the form described by "A Uniform
       System of Citation", a.k.a. the Bluebook, available at
@@ -125,15 +112,16 @@
       pointing to the full citation as a string.
 
       Individual components may be represented by the properties
-      dcterms:title, dcterms:date, and alt:court.
-      Volume/reporter/page locators may be represented with the
-      property dcterms:hasPart pointing to instances of
+      dcterms:title, dcterms:date, and bibo:court.
+      Volume/reporter/page locators may be represented with
+      dcterms:hasPart properties pointing to instances of
       BluebookLocator.
     </rdfs:comment>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
   <owl:Class rdf:about="&alt;BluebookLocator">
-    <rdfs:label>BluebookLocator</rdfs:label>
+    <rdfs:label>alt:BluebookLocator</rdfs:label>
     <rdfs:comment>
       A Bluebook locator has three parts, as in "[volume] [reporter]
       [page]", with an optional "pincite" giving the page at which a
@@ -149,7 +137,7 @@
   </owl:Class>
 
   <owl:Class rdf:about="&alt;Errata">
-    <rdfs:label>Errata</rdfs:label>
+    <rdfs:label>alt:Errata</rdfs:label>
     <rdfs:comment>
       A document listing corrections, modifications, or additions to
       another document.  We would like to have this in a
@@ -160,51 +148,76 @@
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
-  <owl:Class rdf:about="&alt;Process">
-    <rdfs:label>Process</rdfs:label>
-    <rdfs:comment>
-      A single execution of an automated operation, as in a computer.
-    </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:Class>
-
-  <owl:Class rdf:about="&alt;Crawl">
-    <rdfs:label>Crawl</rdfs:label>
-    <rdfs:comment>
-      A single run of an automated process that retrieves and
-      processes Internet resources.
-    </rdfs:comment>
-    <rdfs:subClassOf rdf:resource="&alt;Process"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:Class>
-
-  <owl:Class rdf:about="&alt;Download">
-    <rdfs:label>Download</rdfs:label>
-    <rdfs:comment>
-      Record of downloading a file from an Internet resource.  Used
-      for logging HTTP requests/responses.
-    </rdfs:comment>
-    <rdfs:subClassOf rdf:resource="&alt;Process"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:Class>
-
 
   <!-- PROPERTIES -->
 
-  <owl:ObjectProperty rdf:about="&alt;court">
-    <rdfs:label>court</rdfs:label>
+  <!-- Title properties -->
+
+  <owl:DatatypeProperty rdf:about="&alt;fullTitle">
+    <rdfs:label>alt:fullTitle</rdfs:label>
     <rdfs:comment>
-      The court associated with a document or event.
+      The full, formal title of the case, e.g. "Oliver Brown et
+      al. v. Board of Education of Topeka et al."  A case should have
+      only one full title.  Use "dcterms:title" if uncertain.
     </rdfs:comment>
-    <rdfs:subPropertyOf rdf:resource="&dcterms;coverage"/>
-    <rdfs:domain rdf:resource="&rdf;Resource"/>
-    <rdfs:range rdf:resource="&alt;Court"/>
-    <owl:equivalentProperty rdf:resource="&bibo;court"/>
+    <rdfs:domain rdf:resource="&bibo;Document"/>
+    <rdfs:subPropertyOf rdf:resource="&dcterms;title"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:ObjectProperty>
-  
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="&bibo;shortTitle">
+    <rdfs:label>bibo:shortTitle</rdfs:label>
+    <rdfs:comment>
+      A shortened title of a case, as commonly used when citing or
+      discussing the case, e.g. "Brown v. Board of Education" or just
+      "Brown".  A case may have multiple short titles.  Use
+      "dcterms:title" if uncertain.
+    </rdfs:comment>
+    <rdfs:isDefinedBy rdf:resource="&bibo;"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="&dcterms;issued">
+    <rdfs:label>dcterms:title</rdfs:label>
+    <rdfs:comment>
+      The title of a case.  This property is used when it is not clear
+      if the value represents the full title or a short title.
+    </rdfs:comment>
+    <rdfs:seeAlso rdf:resource="&dcdoc;"/>
+    <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
+    <rdfs:subPropertyOf rdf:resource="&dc;title"/>
+  </owl:DatatypeProperty>
+
+
+  <!-- Date properties -->
+
+  <owl:DatatypeProperty rdf:about="&dcterms;date">
+    <rdfs:label>dcterms:date</rdfs:label>
+    <rdfs:comment>
+      The date of a decision, vaguely assumed to be the date it was
+      decided.  This may be the date "decided", "submitted", "issued",
+      etc.  Datatype should be "xsd:date".
+    </rdfs:comment>
+    <rdfs:seeAlso rdf:resource="&dcdoc;"/>
+    <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
+    <rdfs:subPropertyOf rdf:resource="&dc;date"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="&dcterms;issued">
+    <rdfs:label>dcterms:issued</rdfs:label>
+    <rdfs:comment>
+      The date a decision was published.  Use this property only when
+      the date of publication is different from the date "decided".
+    </rdfs:comment>
+    <rdfs:seeAlso rdf:resource="&dcdoc;"/>
+    <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
+    <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
+  </owl:DatatypeProperty>
+
+
+  <!-- Citation properties -->
+
   <owl:DatatypeProperty rdf:about="&alt;documentNumber">
-    <rdfs:label>documentNumber</rdfs:label>
+    <rdfs:label>alt:documentNumber</rdfs:label>
     <rdfs:comment>
       The court-assigned document number within a docket.
     </rdfs:comment>
@@ -215,97 +228,44 @@
   </owl:DatatypeProperty>
 
   <owl:DatatypeProperty rdf:about="&alt;precedential">
-    <rdfs:label>precedential</rdfs:label>
+    <rdfs:label>alt:precedential</rdfs:label>
     <rdfs:comment>
       Boolean indicating whether or not a decision is considered
       "precedential" (or, equivalently, "published") by the court that
       issued it.
     </rdfs:comment>
-    <rdfs:domain rdf:resource="&alt;Decision"/>
+    <rdfs:domain rdf:resource="&bibo;LegalDecision"/>
     <rdfs:range rdf:resource="&xsd;boolean"/>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:DatatypeProperty>
 
-  <owl:DatatypeProperty rdf:about="&alt;fullTitle">
-    <rdfs:label>fullTitle</rdfs:label>
-    <rdfs:comment>
-      The full, formal title of the case, e.g. "Oliver Brown et
-      al. v. Board of Education of Topeka et al."  A case should have
-      only one full title.
-    </rdfs:comment>
-    <rdfs:domain rdf:resource="&bibo;LegalCaseDocument"/>
-    <rdfs:subPropertyOf rdf:resource="&dcterms;title"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:DatatypeProperty>
-
-  <owl:DatatypeProperty rdf:about="&alt;shortTitle">
-    <rdfs:label>shortTitle</rdfs:label>
-    <rdfs:comment>
-      A shortened title of a case, as commonly used when citing or
-      discussing the case, e.g. "Brown v. Board of Education" or just
-      "Brown".  A case may have multiple short titles.
-    </rdfs:comment>
-    <rdfs:domain rdf:resource="&bibo;LegalCaseDocument"/>
-
-  <owl:DatatypeProperty rdf:about="&alt;gotHttpResponse">
-    <rdfs:label>gotHttpResponse</rdfs:label>
-    <rdfs:comment>
-      A complete log of the HTTP response received from a remote
-      server, containing both HTTP headers and entity body.
-    </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-    <rdfs:domain rdf:resource="&alt;Download"/>
-    <rdfs:range rdf:resource="&xsd;string"/>
-  </owl:DatatypeProperty>
 
 
-  <!-- PROPERTIES DEFINED IN OTHER ONTOLOGIES -->
-
-  <owl:DatatypeProperty rdf:about="&dcterms;date">
-    <rdfs:label>dcterms:date</rdfs:label>
-    <rdfs:comment>
-      The date of a decision.  Use this property only when more
-      specific dates, such as "decided" or "issued", are unknown.
-      Datatype should be "xsd:date".
-    </rdfs:comment>
-    <rdfs:seeAlso rdf:resource="&dcdoc;"/>
-    <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
-    <rdfs:subPropertyOf rdf:resource="&dc;date"/>
-  </owl:DatatypeProperty>
-
-  <owl:DatatypeProperty rdf:about="&dcterms;issued">
-    <rdfs:label>dcterms:issued</rdfs:label>
-    <rdfs:comment>
-      The date a Judgment was published.  Use this property only when
-      the date of publication is different from the date "decided".
-    </rdfs:comment>
-    <rdfs:seeAlso rdf:resource="&dcdoc;"/>
-    <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
-    <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
-  </owl:DatatypeProperty>
-
-  <owl:DatatypeProperty rdf:about="&dcterms;issued">
-    <rdfs:label>dcterms:title</rdfs:label>
-    <rdfs:comment>
-      The title of a case.  Use this property when it is not clear if
-      the value represents the full title or a short title.
-    </rdfs:comment>
-    <rdfs:seeAlso rdf:resource="&dcdoc;"/>
-    <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
-    <rdfs:subPropertyOf rdf:resource="&dc;title"/>
-  </owl:DatatypeProperty>
+  <!-- File properties -->
 
   <owl:ObjectProperty rdf:about="&dcterms;hasFormat">
     <rdfs:label>dcterms:hasFormat</rdfs:label>
     <rdfs:comment>
       Link to another resource containing the same document in a
-      different format.  The target should have a dcterms:format
+      different format.  The target will have an nfo:mimeType
       property giving its MIME type.
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="&dcdoc;"/>
     <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
     <rdfs:subPropertyOf rdf:resource="&dcterms;relation"/>
   </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="&nfo;mimeType">
+    <rdfs:label>nfo:mimeType</rdfs:label>
+    <rdfs:comment>
+      The MIME type of a resource, from the list published by the
+      IANA.
+    </rdfs:comment>
+    <rdfs:isDefinedBy rdf:resource="&nfo;"/>
+  </owl:ObjectProperty>
+
+
+  <!-- Description properties -->
 
   <owl:DatatypeProperty rdf:about="&dcterms;abstract">
     <rdfs:label>dcterms:abstract</rdfs:label>
