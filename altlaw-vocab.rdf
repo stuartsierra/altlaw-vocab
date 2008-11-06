@@ -17,6 +17,7 @@
 <rdf:RDF 
     xmlns:alt="&alt;"
     xmlns:bibo="&bibo;"
+    xmlns:dc="&dc;"
     xmlns:dcterms="&dcterms;"
     xmlns:foaf="&foaf;"
     xmlns:owl="&owl;"
@@ -69,7 +70,8 @@
 
       A Judgment is an abstract concept, the written form of which is
       a bibo:LegalDecision.  However, not all court judgments are
-      written down.
+      written down.  Perhaps this should be a parent class of
+      bibo:LegalDecision, perhaps the other way around.
     </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
@@ -86,84 +88,17 @@
   <owl:Class rdf:about="&alt;Opinion">
     <rdfs:label>alt:Opinion</rdfs:label>
     <rdfs:comment>
-      A single written screed within a bibo:LegalDecision.  Represents
-      the view of one judge or an agreement among judges, such as a
+      A single written screed within a court decision.  Represents the
+      view of one judge or an agreement among judges, such as a
       majority opinion, concurrence, or dissent.
     </rdfs:comment>
     <rdfs:subClassOf rdf:resource="&bibo;LegalCaseDocument"/>
     <rdfs:subClassOf>
       <owl:Restriction>
-        <owl:allValuesFrom rdf:resource="&alt;Decision"/>
+        <owl:allValuesFrom rdf:resource="&bibo;LegalDecision"/>
         <owl:onProperty rdf:resource="&dcterms;isPartOf"/>
       </owl:Restriction>
     </rdfs:subClassOf>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:Class>
-
-  <owl:Class rdf:about="&alt;Citation">
-    <rdfs:label>alt:Citation</rdfs:label>
-    <rdfs:comment>
-      A complete document citation, using a formal citation system.
-    </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:Class>
-
-  <owl:Class rdf:about="&alt;BluebookCitation">
-    <rdfs:label>alt:BluebookCitation</rdfs:label>
-    <rdfs:comment>
-      A citation to a document in the form described by "A Uniform
-      System of Citation", a.k.a. the Bluebook, available at
-      http://www.legalbluebook.com/
-
-      A BluebookCitation is typically composed of a title, one or more
-      BluebookLocators, and a year and court in parentheses. Instances
-      of this class should have, at a minimum, an rdf:value property
-      pointing to the full citation as a string.
-
-      Individual components may be represented by the properties
-      dcterms:title, dcterms:date, and bibo:court.
-      Volume/reporter/page locators may be represented with
-      dcterms:hasPart properties pointing to instances of
-      BluebookLocator.
-    </rdfs:comment>
-    <rdfs:subClassOf rdf:resource="&alt;Citation"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:Class>
-
-  <owl:Class rdf:about="&alt;Locator">
-    <rdfs:label>alt:Locator</rdfs:label>
-    <rdfs:comment>
-      An identifier string, possibly having internal structure, for
-      locating a document according to a formal identification system.
-    </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:Class>
-
-  <owl:Class rdf:about="&alt;BluebookLocator">
-    <rdfs:label>alt:BluebookLocator</rdfs:label>
-    <rdfs:comment>
-      A Bluebook locator has three parts, as in "[volume] [reporter]
-      [page]", with an optional "pincite" giving the page at which a
-      particular reference is found.  Instances of this class should
-      have, at a minimum, an rdf:value property pointing to the
-      locator as a string.  Individual components may be represented
-      by the properties bibo:volume, bibo:startPage, and
-      dcterms:isPartOf pointing to an instance of bibo:CourtReporter
-      or some other collection class.  Pincites may be represented
-      with the alt:atPage or alt:atParagraph properties.
-    </rdfs:comment>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:Class>
-
-  <owl:Class rdf:about="&alt;DocketNumber">
-    <rdfs:label>alt:DocketNumber</rdfs:label>
-    <rdfs:comment>
-      A docket number, as assigned by some court.  Instances of this
-      class should have, at a miminum, and "rdf:value" property
-      pointing to a single docket number as a string.  An instance of
-      this class should contain only one docket number, not a list of
-      numbers.
-    </rdfs:comment>
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:Class>
 
@@ -224,28 +159,69 @@
   <owl:DatatypeProperty rdf:about="&dcterms;date">
     <rdfs:label>dcterms:date</rdfs:label>
     <rdfs:comment>
-      The date of a decision, vaguely assumed to be the date it was
-      decided.  This may be the date "decided", "submitted", "issued",
-      etc.  Datatype should be "xsd:date".
+      The principal date of a decision, usually the date it was
+      decided.  Datatype should be "xsd:date".
     </rdfs:comment>
     <rdfs:seeAlso rdf:resource="&dcdoc;"/>
     <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
     <rdfs:subPropertyOf rdf:resource="&dc;date"/>
   </owl:DatatypeProperty>
 
-  <owl:DatatypeProperty rdf:about="&dcterms;issued">
-    <rdfs:label>dcterms:issued</rdfs:label>
-    <rdfs:comment>
-      The date a decision was published.  Use this property only when
-      the date of publication is different from the date "decided".
-    </rdfs:comment>
-    <rdfs:seeAlso rdf:resource="&dcdoc;"/>
-    <rdfs:isDefinedBy rdf:resource="&dcterms;"/>
-    <rdfs:subPropertyOf rdf:resource="&dcterms;date"/>
-  </owl:DatatypeProperty>
-
 
   <!-- Citation properties -->
+
+  <owl:DatatypeProperty rdf:about="&bibo;court">
+    <rdfs:label>bibo:court</rdfs:label>
+    <rdfs:comment>
+      The court associated with a document, such as the court that
+      released a decision.
+    </rdfs:comment>
+    <rdfs:domain rdf:resource="&bibo;LegalDocument"/>
+    <rdfs:range rdf:resource="&foaf;Organization"/>
+    <rdfs:isDefinedBy rdf:resource="&bibo;"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="&alt;bluebookCitation">
+    <rdfs:label>alt:blueboookCitation</rdfs:label>
+    <rdfs:comment>
+      A citation to a document in the form described by "A Uniform
+      System of Citation", a.k.a. the Bluebook.  This property refers
+      to the complete citation, including title, court, and year.
+      Contrast with "alt:bluebookLocator", which contains only the
+      volume-series-page portion.
+    </rdfs:comment>
+    <rdfs:seeAlso rdf:resource="http://www.legalbluebook.com/"/>
+    <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
+    <rdfs:domain rdf:resource="&bibo;LegalCaseDocument"/>
+    <rdfs:range rdf:resource="&xsd;string"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="&alt;bluebookLocator">
+    <rdfs:label>alt:bluebookLocator</rdfs:label>
+    <rdfs:comment>
+      A Bluebook locator has three parts, as in "[volume] [reporter]
+      [page]", with an optional "pincite" giving the page at which a
+      particular reference is found.
+    </rdfs:comment>
+    <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
+    <rdfs:domain rdf:resource="&bibo;LegalCaseDocument"/>
+    <rdfs:range rdf:resource="&xsd;string"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="&alt;docketNumber">
+    <rdfs:label>alt:docketNumber</rdfs:label>
+    <rdfs:comment>
+      A court-assigned docket number, sometimes also called a "case
+      number."  Value should contain only one docket number, not a
+      list of numbers.
+    </rdfs:comment>
+    <rdfs:subPropertyOf rdf:resource="&dcterms;identifier"/>
+    <rdfs:domain rdf:resource="&bibo;LegalCaseDocument"/>
+    <rdfs:range rdf:resource="&xsd;string"/>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:DatatypeProperty>
 
   <owl:DatatypeProperty rdf:about="&alt;documentNumber">
     <rdfs:label>alt:documentNumber</rdfs:label>
@@ -270,32 +246,6 @@
     <rdfs:isDefinedBy rdf:resource="&alt;"/>
   </owl:DatatypeProperty>
 
-  <owl:ObjectProperty rdf:about="&alt;hasLocator">
-    <rdfs:label>alt:hasLocator</rdfs:label>
-    <rdfs:comment>
-      Link from a document to a locator object.  Valid targets for
-      this property include instances of BluebookLocator and
-      DocketNumber.  Similar to "dcterms:identifier", but with a
-      non-literal range.
-    </rdfs:comment>
-    <rdfs:domain rdf:resource="&bibo;Document"/>
-    <rdfs:range rdf:resource="&alt;Locator"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:ObjectProperty>
-
-  <owl:ObjectProperty rdf:about="&alt;hasCitation">
-    <rdfs:label>dcterms:hasCitation</rdfs:label>
-    <rdfs:comment>
-      Link from a document to a citation object.  Valid targets for
-      this property include instances of BluebookCitation.  Similar to
-      "dcterms:bibliographicCitation", but with a non-literal range.
-    </rdfs:comment>
-    <rdfs:domain rdf:resource="&bibo;Document"/>
-    <rdfs:range rdf:resource="&alt;Citation"/>
-    <rdfs:isDefinedBy rdf:resource="&alt;"/>
-  </owl:ObjectProperty>
-
-
 
   <!-- File properties -->
 
@@ -317,11 +267,22 @@
       The MIME type of a resource, from the list published by the
       IANA.
     </rdfs:comment>
+    <rdfs:seeAlso rdf:resource="http://www.iana.org/assignments/media-types/"/>
     <rdfs:isDefinedBy rdf:resource="&nie;"/>
   </owl:ObjectProperty>
 
 
   <!-- Description properties -->
+
+  <owl:ObjectProperty rdf:about="&alt;appealFrom">
+    <rdfs:label>alt:appealFrom</rdfs:label>
+    <rdfs:comment>
+      Link from a LegalDecision to the prior decision or judgment
+      being appealed.  Range currently left unspecified, should be
+      bibo:LegalDecision or alt:Judgment.
+    </rdfs:comment>
+    <rdfs:isDefinedBy rdf:resource="&alt;"/>
+  </owl:ObjectProperty>
 
   <owl:DatatypeProperty rdf:about="&dcterms;abstract">
     <rdfs:label>dcterms:abstract</rdfs:label>
